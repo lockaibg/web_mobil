@@ -1,0 +1,16 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Preview</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-content>
+    @if (episode) {
+      <h2>{{ episode.fromName }}</h2>
+      <p> </p>
+    } @else {
+      <p>Aucun épisode sélectionné</p>
+    }
+  </ion-content>
+</ion-content>

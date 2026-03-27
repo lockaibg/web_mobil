@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { inject } from '@angular/core';
+import { Router } from '@angular/router';
 import { EpisodeService, Episode } from '../service/episode';
 
 
@@ -15,6 +16,12 @@ export class Tab1Page {
   getMessages(): Episode[] {
     return this.data.getMessages();
   }
-  constructor() {}
+  constructor(private router: Router) {}
+
+  goToEpisode(episode: Episode) {
+    this.router.navigate(['/tabs/tab4'], {
+    state: { episode: episode }
+  });
+}
 
 }
