@@ -6,11 +6,39 @@
 
 <ion-content [fullscreen]="true">
   <ion-content>
-    @if (episode) {
-      <h2>{{ episode.fromName }}</h2>
-      <p> </p>
+    @if (elem) {
+      <h2>{{ getTitle(elem) }}</h2>
+      <div class="buttons">
+
+        <!-- Bouton "Mes épisodes" : uniquement pour une Série -->
+        @if (isSerie(elem)) {
+          <ion-button (click)="SeeEpisodes(elem)">
+            <ion-icon name="list-outline"></ion-icon>
+            Mes épisodes
+          </ion-button>
+        }
+
+        <!-- Bouton "Ajouter" : pour Série et Film, pas pour Episode -->
+        @if (isSerie(elem) || isFilm(elem)) {
+          <ion-button (click)="addToList(elem)">
+            <ion-icon name="add-circle-outline"></ion-icon>
+            Ajouter
+          </ion-button>
+        }
+
+        <!-- Bouton "Statut" : pour tous -->
+        <ion-button (click)="changeStatus(elem)">
+          <ion-icon name="square-outline"></ion-icon>
+          @if (isSerie(elem) || isFilm(elem)) {
+            Pas vu
+          } @else {
+            Lu
+          }
+        </ion-button>
+
+      </div>
     } @else {
-      <p>Aucun épisode sélectionné</p>
+      <p>Aucun élément sélectionné</p>
     }
   </ion-content>
 </ion-content>

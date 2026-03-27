@@ -20,7 +20,7 @@ export class Tab1Page {
 
   goToEpisode(episode: Episode) {
     this.router.navigate(['/tabs/tab4'], {
-    state: { episode: episode }
+    state: { elem: episode }
   });
 }
 
