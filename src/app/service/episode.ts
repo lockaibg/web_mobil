@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 
 export interface Episode {
   fromName: string;
+  duree: number;
   numero: number;
   saison: number;
   read: boolean;
@@ -16,13 +17,15 @@ export class EpisodeService {
       fromName: 'The Witcher',
       numero: 8,
       saison: 1,
-      read: true
+      read: true,
+      duree: 34
     },
     {
       fromName: 'The Witcher',
       numero: 8,
       saison: 2,
-      read: false
+      read: false,
+      duree: 35
     }
   ];
 
