@@ -1,0 +1,13 @@
+@if(episode) {
+  <ion-label class="ion-text-wrap">
+      <h2>
+        {{ episode.fromName }}
+        </h2>
+        <span class="date">
+          <ion-note>{{ episode.numero }} | {{ episode.saison }}</ion-note>
+          @if (isIos()) {
+            <ion-icon aria-hidden="true" name="chevron-forward" size="small"></ion-icon>
+          }
+        </span>
+    </ion-label>
+}
