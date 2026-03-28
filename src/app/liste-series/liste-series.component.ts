@@ -40,7 +40,7 @@ export class ListeSeriesComponent implements OnInit, OnChanges {
 
   goToSerie(serie:UneSerie) {
     this.router.navigate(['/tabs/tab4'], {
-      state: { elem: serie.id, type: 'tv'}
+      state: { elem: serie, type: 'tv'}
     });
   }
 
