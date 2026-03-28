@@ -1,0 +1,5 @@
+@for (item of listeSeries; track item) {
+  <div (click)="goToSerie(item)">
+    <app-card-une-serie [serie]="item"></app-card-une-serie>
+  </div>
+}
