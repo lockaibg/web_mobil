@@ -1,8 +1,9 @@
 import {UnFilm} from './UnFilm';
+import {UneSerie} from "./UneSerie";
 
-export interface UnePage {
+export interface UnePage<T = any> {
   page : number;
   total_pages : number;
-  results : UnFilm [];
+  results : T[];
   total_results : number;
 }

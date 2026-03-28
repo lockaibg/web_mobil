@@ -42,7 +42,7 @@ export class UnFilm {
   public get release_date(): Date{ return this._release_date; }
   public set release_date(value: Date) { this._release_date = value; }
 
-  // Le getter construit l'URL complète pour l'image
+
   public get poster_path(): string {
     return "https://image.tmdb.org/t/p/w185/" + this._poster_path;
   }

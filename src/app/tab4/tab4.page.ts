@@ -23,7 +23,7 @@ export class Tab4Page {
     console.log(id);
 
     if(id){
-      this.bddfilms.getDetails(id).subscribe(contenu => {
+      this.bddfilms.getDetailsFilm(id).subscribe(contenu => {
         this.elem = contenu;
         //if (this.isFilm(this.elem)){
         if(this.elem.listed) {

@@ -41,7 +41,7 @@ export class ListeFilmsComponent implements OnInit, OnChanges {
 
   goToFilm(film: UnFilm) {
     this.router.navigate(['/tabs/tab4'], {
-      state: { elem: film.id }
+      state: { elem: film.id, type: 'film'}
     });
   }
 
