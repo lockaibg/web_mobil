@@ -6,7 +6,7 @@ export interface Episode {
   duree?: number;
   numero: number;
   saison: number;
-  vue: boolean;
+  status: string;
 }
 
 @Injectable({
@@ -25,12 +25,12 @@ export class EpisodeService {
         poster_path: "https://fr.web.img6.acsta.net/pictures/19/11/27/15/09/4719139.jpg",
         release_date: new Date("2019-12-20"),
         listed: false,
-        vue: false
+        status: "NOT"
       },
       duree: 34,
       numero: 8,
       saison: 1,
-      vue: true,
+      status: "NOT",
 
     }
   ];

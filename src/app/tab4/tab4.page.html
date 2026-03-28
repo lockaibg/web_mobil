@@ -66,8 +66,16 @@
       <div class="action-btn-wrapper">
         <ion-button fill="clear" class="action-btn" (click)="changeStatus(elem)">
           <div class="btn-inner">
-            <ion-icon name="square-outline"></ion-icon>
-            <span>Pas vu</span>
+            @if (elem.status === 'NOT') {
+              <ion-icon name="square-outline"></ion-icon>
+              <span>Pas vu</span>
+            } @else if (elem.status === 'EN_COURS') {
+              <ion-icon name="play-circle-outline"></ion-icon>
+              <span>En cours</span>
+            } @else {
+              <ion-icon name="checkbox-outline"></ion-icon>
+              <span>Vu</span>
+            }
           </div>
         </ion-button>
       </div>

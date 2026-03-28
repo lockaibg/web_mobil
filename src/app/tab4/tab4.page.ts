@@ -29,7 +29,7 @@ export class Tab4Page {
       }
     }
 
-    
+
   }
 
   isSerie(elem: any): elem is Serie {
@@ -72,7 +72,23 @@ export class Tab4Page {
   }
 
   changeStatus(elem: any) {
-    // Implementation for changing status
+  if (this.isFilm(elem)) {
+    // Film : NOT → EN_COURS → VUE → NOT
+    if (elem.status === 'NOT') {
+      elem.status = 'EN_COURS';
+    } else if (elem.status === 'EN_COURS') {
+      elem.status = 'VUE';
+    } else {
+      elem.status = 'NOT';
+    }
+  } else if (this.isSerie(elem) || this.isEpisode(elem)) {
+    // Série / Épisode : NOT → VUE → NOT
+    if (elem.status === 'NOT' || elem.status === 'EN_COURS') {
+      elem.status = 'VUE';
+    } else {
+      elem.status = 'NOT';
+    }
   }
+}
 
 }

@@ -12,7 +12,7 @@ export interface Serie {
   synopsis: string,
   duree?: number,
   listed: boolean,
-  vue: boolean
+  status: string
 }
 @Injectable({
   providedIn: 'root',
@@ -30,7 +30,7 @@ export class SerieService {
       poster_path: "https://fr.web.img6.acsta.net/pictures/19/11/27/15/09/4719139.jpg",
       release_date: new Date("2019-12-20"),
       listed: false,
-      vue: false
+      status: "NOT"
     }
   ]
   public getMessages(): Serie[] {
