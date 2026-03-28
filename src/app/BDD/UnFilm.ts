@@ -1,7 +1,12 @@
 export class UnFilm {
-  private _title!: string;
-  private _release_date!: Date;
-  private _poster_path!: string;
+  _title!: string;
+  _release_date!: Date;
+  _poster_path!: string;
+  _realisateur!: string;
+  _acteur!: string;
+  _genre!: string;
+  _synopsis!: string;
+  _duree!: number;
 
   constructor(obj: any) {
     Object.assign(this, obj);
@@ -18,4 +23,21 @@ export class UnFilm {
     return "https://image.tmdb.org/t/p/w185/" + this._poster_path;
   }
   public set poster_path(value: string) { this._poster_path = value; }
+
+  public get realisateur(): string { return this._realisateur; }
+  public set realisateur(value: string) { this._realisateur = value; }
+
+  public get acteur(): string { return this._acteur; }
+  public set acteur(value: string) { this._acteur = value; }
+
+  public get genre(): string { return this._genre; }
+  public set genre(value: string) { this._genre = value; }
+
+  public get synopsis(): string { return this._synopsis; }
+  public set synopsis(value: string) { this._synopsis = value; }
+
+  public get duree(): number { return this._duree; }
+  public set duree(value: number) { this._duree = value; }
+
+
 }

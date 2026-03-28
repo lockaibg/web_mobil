@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { Serie } from '../service/serie';
+import { Serie, SerieService } from '../service/serie';
 import { Film } from '../service/film';
-import { Episode } from '../service/episode';
+import { Episode, EpisodeService } from '../service/episode';
+import { UnFilm } from '../BDD/UnFilm';
 
 @Component({
   selector: 'app-tab4',
@@ -12,9 +13,9 @@ import { Episode } from '../service/episode';
 })
 export class Tab4Page {
 
-  elem: Serie | Film | Episode | null = null;
+  elem: Serie | UnFilm | Episode | null = null;
 
-  constructor(private router: Router) {
+  constructor(private router: Router, private episodeService: EpisodeService, private serieService: SerieService) {
     const navigation = this.router.currentNavigation();
     this.elem = navigation?.extras.state?.['elem'] ?? null;
   }
@@ -23,7 +24,7 @@ export class Tab4Page {
     return elem && 'episodes' in elem;
   }
 
-  isFilm(elem: any): elem is Film {
+  isFilm(elem: any): elem is UnFilm {
     return elem && !('episodes' in elem) && !('numero' in elem);
   }
 
@@ -32,7 +33,18 @@ export class Tab4Page {
   }
 
   getTitle(elem: any): string {
-    return elem?.name ?? elem?.fromName ?? '';
+    return elem?.title ?? elem?.serie.title ?? '';
+  }
+
+  getTotalDuration(serie: Serie): number {
+    return this.serieService.getTotalDuration(serie);
+  }
+
+  getPoster(elem: any): string {
+    if (this.isEpisode(elem)) {
+      return this.episodeService.getPoster(elem);
+    }
+    return elem?.posterUrl || 'assets/placeholder.jpg';
   }
 
   SeeEpisodes(elem: any) {

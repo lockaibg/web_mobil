@@ -5,7 +5,9 @@ export interface Film {
   realisateur: string,
   acteur: string,
   genre: string,
-  synopsis: string
+  synopsis: string,
+  posterUrl: string,
+  duree: number
 }
 
 @Injectable({
@@ -18,7 +20,9 @@ export class FilmService {
         realisateur: "real",
         acteur: "michel polnaref",
         genre: "aventure",
-        synopsis: "un gaqzfille"
+        synopsis: "un gaqzfille",
+        posterUrl: "https://fr.web.img6.acsta.net/pictures/19/11/27/15/09/4719139.jpg",
+        duree: 120
       }
     ]
     public getMessages(): Film[] {

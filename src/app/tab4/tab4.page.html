@@ -5,40 +5,109 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-content>
-    @if (elem) {
-      <h2>{{ getTitle(elem) }}</h2>
-      <div class="buttons">
+  @if (elem) {
 
-        <!-- Bouton "Mes épisodes" : uniquement pour une Série -->
-        @if (isSerie(elem)) {
-          <ion-button (click)="SeeEpisodes(elem)">
-            <ion-icon name="list-outline"></ion-icon>
-            Mes épisodes
-          </ion-button>
-        }
+    <!-- Hero Section -->
+    <div class="hero-section">
+      @if (isSerie(elem)|| isFilm(elem)) {
+        <div class="poster-wrapper">
+          <img class="poster-img" [src]="elem.poster_path || 'assets/placeholder.jpg'" [alt]="getTitle(elem)" />
+        </div>
+      } @else {
+        <div class="poster-wrapper">
+          <img class="poster-img" [src]="getPoster(elem) || 'assets/placeholder.jpg'" [alt]="getTitle(elem)" />
+        </div>
+      }
+      <div class="meta-info">
+        <h1 class="title">{{ getTitle(elem) }}</h1>
 
-        <!-- Bouton "Ajouter" : pour Série et Film, pas pour Episode -->
         @if (isSerie(elem) || isFilm(elem)) {
-          <ion-button (click)="addToList(elem)">
-            <ion-icon name="add-circle-outline"></ion-icon>
-            Ajouter
-          </ion-button>
+          <p class="meta-line">
+            <span class="meta-label">Par </span>{{ elem.realisateur }}
+          </p>
+          <p class="meta-line">
+            <span class="meta-label">Acteur principal : </span>{{ elem.acteur }}
+          </p>
         }
 
-        <!-- Bouton "Statut" : pour tous -->
-        <ion-button (click)="changeStatus(elem)">
-          <ion-icon name="square-outline"></ion-icon>
-          @if (isSerie(elem) || isFilm(elem)) {
-            Pas vu
-          } @else {
-            Lu
-          }
-        </ion-button>
+        @if (isSerie(elem)) {
+          <p class="meta-line">
+            <span class="meta-label">Durée totale : </span>{{ getTotalDuration(elem) }}min
+          </p>
+        }
 
+        @if (isFilm(elem)) {
+          <p class="meta-line">
+            <span class="meta-label">Durée : </span>{{ elem.duree }}min
+          </p>
+        }
+
+        @if (isEpisode(elem)) {
+          <p class="meta-line">
+            <span class="meta-label">Saison </span>{{ elem.saison }}
+            <span class="meta-label"> · Épisode </span>{{ elem.numero }}
+          </p>
+          <p class="meta-line">
+            <span class="meta-label">Durée : </span>{{ elem.duree }}min
+          </p>
+        }
+
+        @if (isSerie(elem) || isFilm(elem)) {
+          <p class="meta-line">
+            <span class="meta-label">Genre : </span>{{ elem.genre }}
+          </p>
+        }
       </div>
-    } @else {
-      <p>Aucun élément sélectionné</p>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="action-buttons">
+
+      <div class="action-btn-wrapper">
+        <ion-button fill="clear" class="action-btn" (click)="changeStatus(elem)">
+          <div class="btn-inner">
+            <ion-icon name="square-outline"></ion-icon>
+            <span>Pas vu</span>
+          </div>
+        </ion-button>
+      </div>
+
+      @if (isSerie(elem)) {
+        <div class="action-btn-wrapper">
+          <ion-button fill="clear" class="action-btn" (click)="SeeEpisodes(elem)">
+            <div class="btn-inner">
+              <ion-icon name="reorder-three-outline"></ion-icon>
+              <span>Mes épisodes</span>
+            </div>
+          </ion-button>
+        </div>
+      }
+
+      @if (isSerie(elem) || isFilm(elem)) {
+        <div class="action-btn-wrapper">
+          <ion-button fill="clear" class="action-btn" (click)="addToList(elem)">
+            <div class="btn-inner">
+              <ion-icon name="add-circle-outline"></ion-icon>
+              <span>Ajouter</span>
+            </div>
+          </ion-button>
+        </div>
+      }
+
+    </div>
+
+    <!-- Synopsis Section -->
+    @if (isSerie(elem) || isFilm(elem)) {
+      <div class="synopsis-section">
+        <h2 class="synopsis-title">Synopsis</h2>
+        <p class="synopsis-text">{{ elem.synopsis }}</p>
+      </div>
     }
-  </ion-content>
+
+  } @else {
+    <div class="empty-state">
+      <ion-icon name="film-outline"></ion-icon>
+      <p>Aucun élément sélectionné</p>
+    </div>
+  }
 </ion-content>

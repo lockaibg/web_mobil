@@ -6,7 +6,6 @@ import { Tab1Page } from './tab1.page';
 import { ExploreContainerComponentModule } from '../explore-container/explore-container.module';
 
 import { Tab1PageRoutingModule } from './tab1-routing.module';
-import { EpisodeComponent } from "../episode/episode.component";
 
 import { CardUnFilmComponent} from "../card-un-film/card-un-film.component";
 import {ListeFilmsComponent} from "../liste-films/liste-films.component";
@@ -23,7 +22,6 @@ import {ListeFilmsComponent} from "../liste-films/liste-films.component";
   ],
   declarations: [
     Tab1Page,
-    EpisodeComponent ,
     CardUnFilmComponent,
     ListeFilmsComponent
   ]

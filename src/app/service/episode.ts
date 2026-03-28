@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
+import { Serie } from './serie';
 
 export interface Episode {
-  fromName: string;
-  duree: number;
+  serie: Serie;
+  duree?: number;
   numero: number;
   saison: number;
-  read: boolean;
+  vue: boolean;
 }
 
 @Injectable({
@@ -14,18 +15,21 @@ export interface Episode {
 export class EpisodeService {
   public episode: Episode[] = [
     {
-      fromName: 'The Witcher',
+      serie: {
+        episodes: [],
+        title: "The Witcher",
+        realisateur: "real",
+        acteur: "michel polnaref",
+        genre: "aventure",
+        synopsis: "un gars qui se balade avec une petite fille",
+        poster_path: "https://fr.web.img6.acsta.net/pictures/19/11/27/15/09/4719139.jpg",
+        release_date: new Date("2019-12-20")
+      },
+      duree: 34,
       numero: 8,
       saison: 1,
-      read: true,
-      duree: 34
-    },
-    {
-      fromName: 'The Witcher',
-      numero: 8,
-      saison: 2,
-      read: false,
-      duree: 35
+      vue: true,
+
     }
   ];
 
@@ -36,6 +40,11 @@ export class EpisodeService {
   }
 
   public getEpisode(numero: number, saison: number, serie: string): Episode | undefined {
-    return this.episode.find(m => m.numero === numero && m.saison === saison && m.fromName === serie);
+    return this.episode.find(m => m.numero === numero && m.saison === saison && m.serie.title === serie);
+  }
+
+  public getPoster(episode: Episode): string {
+    //TODO get poster from serie
+    return 'https://fr.web.img6.acsta.net/pictures/19/11/27/15/09/4719139.jpg';
   }
 }

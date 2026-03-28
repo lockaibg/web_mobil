@@ -4,6 +4,7 @@ import {Subscription} from 'rxjs';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {Bddfilms} from '../BDD/BDDFilms';
 import {UnFilm} from '../BDD/UnFilm';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-liste-films',
@@ -16,6 +17,8 @@ export class ListeFilmsComponent implements OnInit, OnChanges {
   @Input() recherche!: string;
   listeFilms: UnFilm[] = [];
   private destroyRef = inject(DestroyRef);
+
+  router = inject(Router);
 
   constructor(private bddFilms: Bddfilms, private cdr: ChangeDetectorRef) {}
 
@@ -34,6 +37,12 @@ export class ListeFilmsComponent implements OnInit, OnChanges {
         this.listeFilms = films;
         this.cdr.detectChanges();
       });
+  }
+
+  goToFilm(film: UnFilm) {
+    this.router.navigate(['/tabs/tab4'], {
+      state: { elem: film }
+    });
   }
 
 }
