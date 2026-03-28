@@ -4,8 +4,8 @@ import { Serie, SerieService } from '../service/serie';
 import { Film } from '../service/film';
 import { Episode, EpisodeService } from '../service/episode';
 import { UnFilm } from '../BDD/UnFilm';
+import { UneSerie } from '../BDD/UneSerie';
 import {Bddfilms} from "../BDD/BDDFilms";
-import {UneSerie} from "../BDD/UneSerie";
 
 @Component({
   selector: 'app-tab4',
@@ -19,11 +19,11 @@ export class Tab4Page {
   elem: UnFilm | UneSerie ;
   private type : string = '';
 
-  constructor(private router: Router, private episodeService: EpisodeService,private bddfilms: Bddfilms, private serieService: SerieService) {
+  constructor(private router: Router, private episodeService: EpisodeService,private bddfilms: Bddfilms) {
     const navigation = this.router.currentNavigation();
     this.elem = navigation?.extras.state?.['elem'] ?? null;
     this.type = navigation?.extras.state?.['type'] ?? '';
-    }
+  }
 
   ionViewWillEnter() {
     this.setupPage();
@@ -62,7 +62,7 @@ export class Tab4Page {
 
 
 
-  isSerie(elem: any): elem is Serie {
+  isSerie(elem: any): elem is UneSerie {
     return elem && 'episodes' in elem;
   }
 
@@ -78,8 +78,10 @@ export class Tab4Page {
     return elem?.title ?? elem?.serie.title ?? '';
   }
 
-  getTotalDuration(serie: Serie): number {
-    return this.serieService.getTotalDuration(serie);
+  getTotalDuration(serie: UneSerie): number {
+    //TODO get total duration from serie
+    //return this.bddfilms.getTotalDuration(serie);
+    return 10;
   }
 
   getPoster(elem: any): string {
@@ -93,7 +95,7 @@ export class Tab4Page {
     // Implementation for seeing episodes
   }
 
-  addToList(elem: UnFilm | Serie) {
+  addToList(elem: UnFilm | UneSerie) {
     if(elem.listed) {
       elem.listed = false;
     } else {
