@@ -30,12 +30,24 @@
 </ion-content>
 
 @if (switchPage) {
-  <div>
+  <div class="series">
     <p>salut à tous voici les séries</p>
+    @for (section of test; track section.titre) {
+      <div class="series-row">
+        <h2 class="series-row-title">{{ section.titre }}</h2>
+
+        <div class="scroll-horizontal">
+        @for (item of section.items; track item) {
+          <h3>{{ item }}</h3>
+        }
+        </div>
+      </div>
+    }
   </div>
+
 }
 @if (!switchPage) {
-  <div>
+  <div class="films">
     <p>films.;;;</p>
   </div>
 }
