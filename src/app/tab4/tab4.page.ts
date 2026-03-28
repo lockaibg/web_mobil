@@ -35,14 +35,6 @@ export class Tab4Page {
     this.setupPage();
   }
 
-
-   /** if(this.elem && (this.isSerie(this.elem) || this.isFilm(this.elem))) {
-      if(this.elem.listed) {
-        this.checkBox = true;
-      } else {
-        this.checkBox = false;
-      }**/
-
    setupPage(): void {
      if(this.elem) {
        if (this.type === 'film') {
@@ -57,11 +49,6 @@ export class Tab4Page {
          });
        }
 
-       /**if (this.elem.listed) {
-         this.checkBox = true;
-       } else {
-         this.checkBox = false;
-       }**/
      }
    }
 
@@ -102,31 +89,25 @@ export class Tab4Page {
   }
 
   addToList(elem: UnFilm | UneSerie) {
-    /**if(elem.listed) {
-      elem.listed = false;
+    if(this.listed) {
+      this.listed = false;
+      this.addedService.removeAdded(elem.id);
     } else {
-      elem.listed = true;
-    }**/
+      this.listed = true;
+      this.addedService.addAdded(elem.id);
+    }
   }
 
   changeStatus(elem: any) {
-  /**if (this.isFilm(elem)) {
-    // Film : NOT → EN_COURS → VUE → NOT
-    if (elem.status === 'NOT') {
-      elem.status = 'EN_COURS';
-    } else if (elem.status === 'EN_COURS') {
-      elem.status = 'VUE';
+    if(this.status === 'NOT') {
+      this.status = 'EN_COURS';
+      this.watchedService.addWatched(elem.id);
+    } else if (this.status === 'EN_COURS') {
+      this.status = 'VUE';
     } else {
-      elem.status = 'NOT';
+      this.status = 'NOT';
+      this.watchedService.removeWatched(elem.id);
     }
-  } else if (this.isSerie(elem) || this.isEpisode(elem)) {
-    // Série / Épisode : NOT → VUE → NOT
-    if (elem.status === 'NOT' || elem.status === 'EN_COURS') {
-      elem.status = 'VUE';
-    } else {
-      elem.status = 'NOT';
-    }
-  }**/
 }
 
 }
