@@ -27,7 +27,7 @@
   <ion-button (click)="onRecherche()">Rechercher</ion-button>
 
   <app-liste-series [recherche]="recherche"></app-liste-series>
-</ion-content>
+
 
 @if (switchPage) {
   <div class="series">
@@ -51,6 +51,16 @@
     <p>films.;;;</p>
 
     <div class="list-row">
+      <h2 class="list-row-title">Ma Liste</h2>
+      @for (film of filmsAjoute; track film) {
+        <p>{{ film }}</p>
+      }
+      @if (filmsAjoute.length === 0) {
+        <p>Aucun films ajouté à votre liste.</p>
+      }
+    </div>
+
+    <div class="list-row">
       <h2 class="list-row-title">Films regardés</h2>
       @for (film of filmsVus; track film) {
         <p>{{ film }}</p>
@@ -61,14 +71,15 @@
     </div>
 
     <div class="list-row">
-      <h2 class="list-row-title">Ma Liste</h2>
+      <h2 class="list-row-title">Tendance</h2>
       @for (film of filmsAjoute; track film) {
         <p>{{ film }}</p>
       }
       @if (filmsAjoute.length === 0) {
-        <p>Aucun films ajouté à votre liste.</p>
+        <p>erhgiuwdlfsmJefhogilfx</p>
       }
     </div>
   </div>
 
 }
+</ion-content>
