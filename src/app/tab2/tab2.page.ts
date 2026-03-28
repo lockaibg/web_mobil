@@ -1,7 +1,15 @@
 import {ChangeDetectorRef, Component} from '@angular/core';
 import {FormBuilder, FormGroup} from "@angular/forms";
+
+import { Bddfilms } from '../BDD/BDDFilms';
+import { UnFilm } from '../BDD/UnFilm';
+import { UneSerie } from "../BDD/UneSerie";
+
+import { OnGoingService } from "../service/onGoing.service";
+import { SeriesAddedService } from "../service/serieAdded.service";
+import { AddedService } from "../service/added.service";
 import { WatchedService } from '../service/watched.service';
-import { AddedService} from "../service/added.service";
+
 
 @Component({
   selector: 'app-tab2',
@@ -14,32 +22,114 @@ export class Tab2Page {
   myForm: FormGroup;
 
   switchPage: boolean = true; //true = séries, false = films
-  test = [
-    { titre: 'pipi', items: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20] },
-    { titre: 'caca', items: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20] },
-    { titre: 'prout', items: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20] }
-  ];
 
-  filmsVus: any[] = [];
-  filmsAjoute: any[] = [];
+  seriesEnCours: UneSerie[] = [];
+  seriesAjoutes: UneSerie[] = [];
+  seriesVues: UneSerie[] = [];
+
+  filmsVus: UnFilm[] = [];
+  filmsAjoutes: UnFilm[] = [];
+
+
 
   constructor(
     private fb: FormBuilder,
     private cdr: ChangeDetectorRef,
+    private onGoingService: OnGoingService,
+    private seriesAddedService: SeriesAddedService,
+    private seriesWatchedService: WatchedService,
+    private addedService: AddedService,
     private watchedService: WatchedService,
-    private addedService: AddedService
+    private bddFilms: Bddfilms
   ) {
     this.myForm = this.fb.group({ text: [''] });
   }
 
   //Chargement des données à chaque fois qu'onarrive sur la page
   ionViewWillEnter() {
-    this.filmsVus = this.watchedService.getWatched();
-    this.filmsAjoute = this.addedService.getAdded();
+    this.onGoingService.add(1396);
+    this.onGoingService.add(1399);
+    this.onGoingService.add(66732);
+    this.onGoingService.add(2316);
+    this.onGoingService.add(94605);
+
+    this.addedService.add(2);
+    this.addedService.add(3);
+    this.addedService.add(4);
+    this.addedService.add(5);
+    this.addedService.add(6);
+    this.addedService.add(7);
+
+
+    this.watchedService.add(120);
+
+    this.chargerSeriesEnCours();
+    this.chargerSeriesAjoutes();
+    this.chargerSeriesVus();
+
+    this.chargerFilmsAjoute();
+    this.chargerFilmsVus();
+  }
+
+  chargerFilmsAjoute() {
+    const ids = this.addedService.get();
+    this.filmsAjoutes = [];
+    for (const id of ids) {
+      this.bddFilms.getDetailsFilm(id).subscribe((film: UnFilm) => {
+        this.filmsAjoutes.push(film);
+        this.cdr.detectChanges();
+      });
+    }
+  }
+
+
+  private chargerFilmsVus() {
+    const ids = this.watchedService.get();
+    this.filmsVus = [];
+    for (const id of ids) {
+      this.bddFilms.getDetailsFilm(id).subscribe((film: UnFilm) => {
+        this.filmsVus.push(film);
+        this.cdr.detectChanges();
+      });
+    }
+  }
+
+  private chargerSeriesEnCours() {
+    const ids = this.onGoingService.get()
+    this.seriesEnCours = [];
+    for (const id of ids) {
+      this.bddFilms.getDetailsSerie(id).subscribe((serie: UneSerie) => {
+        this.seriesEnCours.push(serie);
+        this.cdr.detectChanges();
+      });
+    }
+  }
+
+  private chargerSeriesAjoutes() {
+    const ids = this.seriesAddedService.get()
+    this.seriesAjoutes = [];
+    for (const id of ids) {
+      this.bddFilms.getDetailsSerie(id).subscribe((serie: UneSerie) => {
+        this.seriesAjoutes.push(serie);
+        this.cdr.detectChanges();
+      });
+    }
+  }
+
+  private chargerSeriesVus() {
+    const ids = this.seriesWatchedService.get()
+    this.seriesVues = [];
+    for (const id of ids) {
+      this.bddFilms.getDetailsSerie(id).subscribe((serie: UneSerie) => {
+        this.seriesVues.push(serie);
+        this.cdr.detectChanges();
+      });
+    }
   }
 
   onRecherche() {
     this.recherche = this.myForm.value.text;
     this.cdr.detectChanges();
   }
+
 }

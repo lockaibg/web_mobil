@@ -12,18 +12,21 @@ import {ListeFilmsComponent} from "../liste-films/liste-films.component";
 
 
 @NgModule({
-  imports: [
-    IonicModule,
-    CommonModule,
-    FormsModule,
-    ExploreContainerComponentModule,
-    Tab1PageRoutingModule,
-    ReactiveFormsModule
-  ],
-  declarations: [
-    Tab1Page,
-    CardUnFilmComponent,
-    ListeFilmsComponent
-  ]
+    imports: [
+        IonicModule,
+        CommonModule,
+        FormsModule,
+        ExploreContainerComponentModule,
+        Tab1PageRoutingModule,
+        ReactiveFormsModule
+    ],
+    exports: [
+        CardUnFilmComponent
+    ],
+    declarations: [
+        Tab1Page,
+        CardUnFilmComponent,
+        ListeFilmsComponent
+    ]
 })
 export class Tab1PageModule {}

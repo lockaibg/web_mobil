@@ -36,76 +36,115 @@
 @if (switchPage) {
   <div class="series">
 
+    <!--SERIE EN COURS-->
     <div class="list-row">
       <h2 class="list-row-title">Mes séries en cours</h2>
-      @for (film of filmsAjoute; track film) {
-        <p>{{ film }}</p>
-      }
-      @if (filmsAjoute.length === 0) {
+      <div class="scroll-horizontal">
+        @for (serie of seriesEnCours; track serie.id) {
+          <div class="card">
+            <app-card-une-serie [serie]="serie" class="custom-scroll-card"></app-card-une-serie>
+          </div>
+        }
+      </div>
+      @if (seriesEnCours.length === 0) {
         <p>Aucune série en cours.</p>
       }
     </div>
 
+    <!--SERIE AJOUTES-->
     <div class="list-row">
-      <h2 class="list-row-title">Ma Liste</h2>
-      @for (film of filmsAjoute; track film) {
-        <p>{{ film }}</p>
-      }
-      @if (filmsAjoute.length === 0) {
-        <p>Aucune série ajoutée à votre liste.</p>
+      <h2 class="list-row-title">Ma liste</h2>
+      <div class="scroll-horizontal">
+        @for (serie of seriesAjoutes; track serie.id) {
+          <div class="card">
+            <app-card-une-serie [serie]="serie" class="custom-scroll-card"></app-card-une-serie>
+          </div>
+        }
+      </div>
+      @if (seriesAjoutes.length === 0) {
+        <p>Aucune série ajouté à votre liste.</p>
       }
     </div>
 
+    <!--SERIE REGARDE-->
     <div class="list-row">
       <h2 class="list-row-title">Séries regardés</h2>
-      @for (film of filmsVus; track film) {
-        <p>{{ film }}</p>
-      }
-      @if (filmsVus.length === 0) {
-        <p>Aucune série vu.</p>
+      <div class="scroll-horizontal">
+        @for (serie of seriesVues; track serie.id) {
+          <div class="card">
+            <img [src]="serie.poster_path" [alt]="serie.title" class="poster">
+            <p class="card-title">{{ serie.title }}</p>
+          </div>
+        }
+      </div>
+      @if (seriesEnCours.length === 0) {
+        <p>Aucune série en cours.</p>
       }
     </div>
 
+    <!--SERIE TENDANCE-->
     <div class="list-row">
-      <h2 class="list-row-title">Tendance</h2>
-      @for (film of filmsAjoute; track film) {
-        <p>{{ film }}</p>
-      }
-      @if (filmsAjoute.length === 0) {
-        <p>erhgiuwdlfsmJefhogilfx</p>
+      <h2 class="list-row-title">Tendances</h2>
+      <div class="scroll-horizontal">
+        @for (serie of seriesVues; track serie.id) {
+          <div class="card">
+            <img [src]="serie.poster_path" [alt]="serie.title" class="poster">
+            <p class="card-title">{{ serie.title }}</p>
+          </div>
+        }
+      </div>
+      @if (seriesEnCours.length === 0) {
+        <p>Aucune série en cours.</p>
       }
     </div>
   </div>
 }
 @if (!switchPage) {
   <div class="films">
+
+    <!--FILM EN COURS-->
     <div class="list-row">
       <h2 class="list-row-title">Ma Liste</h2>
-      @for (film of filmsAjoute; track film) {
-        <p>{{ film }}</p>
+      <div class="scroll-horizontal">
+      @for (film of filmsAjoutes; track film.id) {
+        <div class="card">
+          <app-card-un-film [film]="film" class="custom-scroll-card"></app-card-un-film>
+        </div>
       }
-      @if (filmsAjoute.length === 0) {
+      </div>
+      @if (filmsAjoutes.length === 0) {
         <p>Aucun films ajouté à votre liste.</p>
       }
     </div>
 
+    <!--FILM REGARDE-->
     <div class="list-row">
       <h2 class="list-row-title">Films regardés</h2>
-      @for (film of filmsVus; track film) {
-        <p>{{ film }}</p>
-      }
-      @if (filmsVus.length === 0) {
-        <p>Aucun films vu.</p>
+      <div class="scroll-horizontal">
+        @for (film of filmsVus; track film.id) {
+          <div class="card">
+            <app-card-un-film [film]="film" class="custom-scroll-card"></app-card-un-film>
+          </div>
+        }
+      </div>
+      @if (filmsAjoutes.length === 0) {
+        <p>Aucun films ajouté à votre liste.</p>
       }
     </div>
 
+    <!--FILM TENDANCe-->
     <div class="list-row">
       <h2 class="list-row-title">Tendance</h2>
-      @for (film of filmsAjoute; track film) {
-        <p>{{ film }}</p>
-      }
-      @if (filmsAjoute.length === 0) {
-        <p>erhgiuwdlfsmJefhogilfx</p>
+      <div class="scroll-horizontal">
+        @for (film of filmsAjoutes; track film.id) {
+          <div class="card">
+            <img [src]="film.poster_path" [alt]="film.title" class="poster">
+            <p class="card-title">{{ film.title }}</p>
+          </div>
+        }
+      </div>
+      @if (filmsAjoutes.length === 0) {
+        <p>Aucun films ajouté à votre liste.</p>
       }
     </div>
   </div>

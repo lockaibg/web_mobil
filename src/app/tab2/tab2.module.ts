@@ -8,6 +8,7 @@ import { ExploreContainerComponentModule } from '../explore-container/explore-co
 import { Tab2PageRoutingModule } from './tab2-routing.module';
 import { ListeSeriesComponent} from "../liste-series/liste-series.component";
 import {CardUneSerieComponent} from "../card-une-serie/card-une-serie.component";
+import {Tab1PageModule} from "../tab1/tab1.module";
 
 @NgModule({
   imports: [
@@ -16,7 +17,8 @@ import {CardUneSerieComponent} from "../card-une-serie/card-une-serie.component"
     FormsModule,
     ExploreContainerComponentModule,
     Tab2PageRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    Tab1PageModule
   ],
   declarations: [Tab2Page,
   ListeSeriesComponent,

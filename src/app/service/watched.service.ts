@@ -25,7 +25,7 @@ export class WatchedService {
     localStorage.setItem(this.STORAGE_KEY, JSON.stringify(this.watchedFilms));
   }
 
-  addWatched(elem: number) {
+  add(elem: number) {
     const exists = this.watchedFilms.find(f => f === elem);
     if (!exists) {
       this.watchedFilms.push(elem);
@@ -33,12 +33,12 @@ export class WatchedService {
     }
   }
 
-  removeWatched(elem: number) {
+  remove(elem: number) {
     this.watchedFilms = this.watchedFilms.filter(f => f !== elem);
     this.save();
   }
 
-  getWatched(): number[] {
+  get(): number[] {
     return this.watchedFilms;
   }
 

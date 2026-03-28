@@ -91,22 +91,22 @@ export class Tab4Page {
   addToList(elem: UnFilm | UneSerie) {
     if(this.listed) {
       this.listed = false;
-      this.addedService.removeAdded(elem.id);
+      this.addedService.remove(elem.id);
     } else {
       this.listed = true;
-      this.addedService.addAdded(elem.id);
+      this.addedService.add(elem.id);
     }
   }
 
   changeStatus(elem: any) {
     if(this.status === 'NOT') {
       this.status = 'EN_COURS';
-      this.watchedService.addWatched(elem.id);
+      this.watchedService.add(elem.id);
     } else if (this.status === 'EN_COURS') {
       this.status = 'VUE';
     } else {
       this.status = 'NOT';
-      this.watchedService.removeWatched(elem.id);
+      this.watchedService.remove(elem.id);
     }
 }
 

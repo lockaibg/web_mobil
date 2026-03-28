@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
-import { UnFilm } from '../BDD/UnFilm';
+import { UneSerie } from '../BDD/UneSerie';
 
 @Injectable({ providedIn: 'root' })
-export class AddedService {
+export class SeriesAddedService {
 
-  private readonly STORAGE_KEY = 'added_films';
-  private AddedFilms: number[] = [];
+  private readonly STORAGE_KEY = 'added_series';
+  private AddedSeries: number[] = [];
 
   constructor() {
     this.load(); // Charger au démarrage
@@ -16,33 +16,33 @@ export class AddedService {
     const data = localStorage.getItem(this.STORAGE_KEY);
     if (data) {
       const parsed = JSON.parse(data);
-      this.AddedFilms = parsed.map((obj: any) => new UnFilm(obj));
+      this.AddedSeries = parsed.map((obj: any) => new UneSerie(obj));
     }
   }
 
   // Sauvegarder dans localStorage
   private save() {
-    localStorage.setItem(this.STORAGE_KEY, JSON.stringify(this.AddedFilms));
+    localStorage.setItem(this.STORAGE_KEY, JSON.stringify(this.AddedSeries));
   }
 
   add(elem: number) {
-    const exists = this.AddedFilms.find(f => f === elem);
+    const exists = this.AddedSeries.find(f => f === elem);
     if (!exists) {
-      this.AddedFilms.push(elem);
+      this.AddedSeries.push(elem);
       this.save();
     }
   }
 
   remove(elem: number) {
-    this.AddedFilms = this.AddedFilms.filter(f => f !== elem);
+    this.AddedSeries = this.AddedSeries.filter(f => f !== elem);
     this.save();
   }
 
   get(): number[] {
-    return this.AddedFilms;
+    return this.AddedSeries;
   }
 
   isAdded(elem: number): boolean {
-    return this.AddedFilms.some(f => f === elem);
+    return this.AddedSeries.some(f => f === elem);
   }
 }
