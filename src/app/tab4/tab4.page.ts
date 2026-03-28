@@ -13,11 +13,23 @@ import { UnFilm } from '../BDD/UnFilm';
 })
 export class Tab4Page {
 
+  checkBox!: boolean;
+
   elem: Serie | UnFilm | Episode | null = null;
 
   constructor(private router: Router, private episodeService: EpisodeService, private serieService: SerieService) {
     const navigation = this.router.currentNavigation();
     this.elem = navigation?.extras.state?.['elem'] ?? null;
+
+    if(this.elem && (this.isSerie(this.elem) || this.isFilm(this.elem))) {
+      if(this.elem.listed) {
+        this.checkBox = true;
+      } else {
+        this.checkBox = false;
+      }
+    }
+
+    
   }
 
   isSerie(elem: any): elem is Serie {
@@ -51,8 +63,12 @@ export class Tab4Page {
     // Implementation for seeing episodes
   }
 
-  addToList(elem: any) {
-    // Implementation for adding to list
+  addToList(elem: UnFilm | Serie) {
+    if(elem.listed) {
+      elem.listed = false;
+    } else {
+      elem.listed = true;
+    }
   }
 
   changeStatus(elem: any) {

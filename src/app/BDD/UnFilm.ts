@@ -7,9 +7,13 @@ export class UnFilm {
   _genre!: string;
   _synopsis!: string;
   _duree!: number;
+  _vue!: boolean;
+  _listed!: boolean;
 
   constructor(obj: any) {
     Object.assign(this, obj);
+    this._vue = false;
+    this._listed = false;
   }
 
   public get title(): string { return this._title; }
@@ -39,5 +43,10 @@ export class UnFilm {
   public get duree(): number { return this._duree; }
   public set duree(value: number) { this._duree = value; }
 
+  public get vue(): boolean { return this._vue; }
+  public set vue(value: boolean) { this._vue = value; }
+
+  public get listed(): boolean { return this._listed; }
+  public set listed(value: boolean) { this._listed = value; }
 
 }

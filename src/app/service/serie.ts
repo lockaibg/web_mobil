@@ -11,6 +11,8 @@ export interface Serie {
   genre: string,
   synopsis: string,
   duree?: number,
+  listed: boolean,
+  vue: boolean
 }
 @Injectable({
   providedIn: 'root',
@@ -27,6 +29,8 @@ export class SerieService {
       synopsis: "un gars qui se balade avec une petite fille",
       poster_path: "https://fr.web.img6.acsta.net/pictures/19/11/27/15/09/4719139.jpg",
       release_date: new Date("2019-12-20"),
+      listed: false,
+      vue: false
     }
   ]
   public getMessages(): Serie[] {
