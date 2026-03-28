@@ -6,6 +6,18 @@
   </ion-toolbar>
 </ion-header>
 
+<ion-toolbar>
+  <ion-segment [(ngModel)]="switchPage">
+    <ion-segment-button [value]="true">
+      <ion-label>Séries</ion-label>
+    </ion-segment-button>
+    <ion-segment-button [value]="false">
+      <ion-label>Films</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+</ion-toolbar>
+
+
 <ion-content>
   <form [formGroup]="myForm">
     <ion-item>
@@ -16,3 +28,14 @@
 
   <app-liste-series [recherche]="recherche"></app-liste-series>
 </ion-content>
+
+@if (switchPage) {
+  <div>
+    <p>salut à tous voici les séries</p>
+  </div>
+}
+@if (!switchPage) {
+  <div>
+    <p>films.;;;</p>
+  </div>
+}

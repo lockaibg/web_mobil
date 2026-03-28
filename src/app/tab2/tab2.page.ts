@@ -11,6 +11,8 @@ export class Tab2Page {
   recherche: string = '';
   myForm: FormGroup;
 
+  switchPage: boolean = true; //true = séries, false = films
+
   constructor(private fb: FormBuilder, private cdr: ChangeDetectorRef) {
     this.myForm = this.fb.group({ text: [''] });
   }
