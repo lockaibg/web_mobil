@@ -1,7 +1,11 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      Tab 2
+      @if (switchPage) {
+        <h1>Séries</h1>
+      } @else {
+        <h1>Films</h1>
+      }
     </ion-title>
   </ion-toolbar>
 </ion-header>
@@ -31,25 +35,50 @@
 
 @if (switchPage) {
   <div class="series">
-    <p>salut à tous voici les séries</p>
-    @for (section of test; track section.titre) {
-      <div class="list-row">
-        <h2 class="list-row-title">{{ section.titre }}</h2>
 
-        <div class="scroll-horizontal">
-        @for (item of section.items; track item) {
-          <h3>{{ item }}</h3>
-        }
-        </div>
-      </div>
-    }
+    <div class="list-row">
+      <h2 class="list-row-title">Mes séries en cours</h2>
+      @for (film of filmsAjoute; track film) {
+        <p>{{ film }}</p>
+      }
+      @if (filmsAjoute.length === 0) {
+        <p>Aucune série en cours.</p>
+      }
+    </div>
+
+    <div class="list-row">
+      <h2 class="list-row-title">Ma Liste</h2>
+      @for (film of filmsAjoute; track film) {
+        <p>{{ film }}</p>
+      }
+      @if (filmsAjoute.length === 0) {
+        <p>Aucune série ajoutée à votre liste.</p>
+      }
+    </div>
+
+    <div class="list-row">
+      <h2 class="list-row-title">Séries regardés</h2>
+      @for (film of filmsVus; track film) {
+        <p>{{ film }}</p>
+      }
+      @if (filmsVus.length === 0) {
+        <p>Aucune série vu.</p>
+      }
+    </div>
+
+    <div class="list-row">
+      <h2 class="list-row-title">Tendance</h2>
+      @for (film of filmsAjoute; track film) {
+        <p>{{ film }}</p>
+      }
+      @if (filmsAjoute.length === 0) {
+        <p>erhgiuwdlfsmJefhogilfx</p>
+      }
+    </div>
   </div>
-
 }
 @if (!switchPage) {
   <div class="films">
-    <p>films.;;;</p>
-
     <div class="list-row">
       <h2 class="list-row-title">Ma Liste</h2>
       @for (film of filmsAjoute; track film) {
