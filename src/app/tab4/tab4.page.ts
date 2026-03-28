@@ -51,11 +51,11 @@ export class Tab4Page {
          });
        }
 
-       if (this.elem.listed) {
+       /**if (this.elem.listed) {
          this.checkBox = true;
        } else {
          this.checkBox = false;
-       }
+       }**/
      }
    }
 
@@ -96,15 +96,15 @@ export class Tab4Page {
   }
 
   addToList(elem: UnFilm | UneSerie) {
-    if(elem.listed) {
+    /**if(elem.listed) {
       elem.listed = false;
     } else {
       elem.listed = true;
-    }
+    }**/
   }
 
   changeStatus(elem: any) {
-  if (this.isFilm(elem)) {
+  /**if (this.isFilm(elem)) {
     // Film : NOT → EN_COURS → VUE → NOT
     if (elem.status === 'NOT') {
       elem.status = 'EN_COURS';
@@ -120,7 +120,7 @@ export class Tab4Page {
     } else {
       elem.status = 'NOT';
     }
-  }
+  }**/
 }
 
 }

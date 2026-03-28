@@ -8,8 +8,6 @@ export class UnFilm {
   _genre!: string;
   _synopsis!: string;
   _duree!: number;
-  _status!: string;
-  _listed!: boolean;
 
   constructor(obj: any) {
     Object.assign(this, obj);
@@ -29,8 +27,6 @@ export class UnFilm {
       if (director) this._realisateur = director.name;
       else this._realisateur = 'Inconnu';
     }
-    this._status = "NOT";
-    this._listed = false;
   }
 
   public get id(): number {return this._id;}
@@ -62,11 +58,5 @@ export class UnFilm {
 
   public get duree(): number { return this._duree; }
   public set duree(value: number) { this._duree = value; }
-
-  public get status(): string { return this._status; }
-  public set status(value: string) { this._status = value; }
-
-  public get listed(): boolean { return this._listed; }
-  public set listed(value: boolean) { this._listed = value; }
 
 }

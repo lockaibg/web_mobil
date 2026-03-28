@@ -28,7 +28,8 @@ export class UneSerie {
     if(obj.credits?.cast){
       this._acteur = obj.credits.cast.slice(0,5).map((a: any) => a.name).join(', ');
     }
-
+    this._status = "NOT";
+    this._listed = false;
   }
 
   public get poster_path(): string {
