@@ -1,4 +1,5 @@
 export class UnFilm {
+  _id !: number;
   _title!: string;
   _release_date!: Date;
   _poster_path!: string;
@@ -12,9 +13,28 @@ export class UnFilm {
 
   constructor(obj: any) {
     Object.assign(this, obj);
+
+    this._title = obj.title;
+    this._synopsis = obj.overview;
+
+    this.duree = obj.runtime;
+    if (obj.genres)
+    {this._genre = obj.genres.map((g:any) => g.name).join(', ');}
+
+    if (obj.credits){
+      this._acteur = obj.credits.cast.slice(0,5) // on garde que 5 acteurs
+        .map((a:any) => a.name).join(', '); // et on les stocke
+
+      const director = obj.credits.crew.find((member:any) => member.job === 'Director');
+      if (director) this._realisateur = director.name;
+      else this._realisateur = 'Inconnu';
+    }
     this._status = "NOT";
     this._listed = false;
   }
+
+  public get id(): number {return this._id;}
+  public set id(id: number) {this._id = id;}
 
   public get title(): string { return this._title; }
   public set title(value: string) { this._title = value; }

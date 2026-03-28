@@ -4,6 +4,7 @@ import { Serie, SerieService } from '../service/serie';
 import { Film } from '../service/film';
 import { Episode, EpisodeService } from '../service/episode';
 import { UnFilm } from '../BDD/UnFilm';
+import {Bddfilms} from "../BDD/BDDFilms";
 
 @Component({
   selector: 'app-tab4',
@@ -14,23 +15,36 @@ import { UnFilm } from '../BDD/UnFilm';
 export class Tab4Page {
 
   checkBox!: boolean;
-
   elem: Serie | UnFilm | Episode | null = null;
 
-  constructor(private router: Router, private episodeService: EpisodeService, private serieService: SerieService) {
+  constructor(private router: Router, private episodeService: EpisodeService,private bddfilms: Bddfilms, private serieService: SerieService) {
     const navigation = this.router.currentNavigation();
-    this.elem = navigation?.extras.state?.['elem'] ?? null;
+    const id = navigation?.extras.state?.['elem'] ?? null;
+    console.log(id);
 
-    if(this.elem && (this.isSerie(this.elem) || this.isFilm(this.elem))) {
+    if(id){
+      this.bddfilms.getDetails(id).subscribe(contenu => {
+        this.elem = contenu;
+        //if (this.isFilm(this.elem)){
+        if(this.elem.listed) {
+          this.checkBox = true;
+        } else {
+          this.checkBox = false;
+        }
+        //}
+      });
+    }
+
+   /** if(this.elem && (this.isSerie(this.elem) || this.isFilm(this.elem))) {
       if(this.elem.listed) {
         this.checkBox = true;
       } else {
         this.checkBox = false;
-      }
-    }
-
-
+      }**/
   }
+
+
+
 
   isSerie(elem: any): elem is Serie {
     return elem && 'episodes' in elem;

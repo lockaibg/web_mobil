@@ -49,4 +49,12 @@ export class Bddfilms {
       })
     );
   }
+
+  public getDetails(id:number): Observable<UnFilm> {
+    const apiKey = "e9a97e2e731b2968cddc7c13647130fe";
+    const url = `https://api.themoviedb.org/3/movie/${id}?api_key=${apiKey}&append_to_response=credits`;
+    return this.httpClient.get<any>(url).pipe(map(data => {return new UnFilm(data);}));
+  }
+
+
 }
