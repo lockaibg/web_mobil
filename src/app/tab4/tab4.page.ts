@@ -5,6 +5,7 @@ import { Film } from '../service/film';
 import { Episode, EpisodeService } from '../service/episode';
 import { UnFilm } from '../BDD/UnFilm';
 import {Bddfilms} from "../BDD/BDDFilms";
+import {UneSerie} from "../BDD/UneSerie";
 
 @Component({
   selector: 'app-tab4',
@@ -15,16 +16,15 @@ import {Bddfilms} from "../BDD/BDDFilms";
 export class Tab4Page {
 
   checkBox!: boolean;
-  elem: Serie | UnFilm | Episode | null = null;
+  elem: UnFilm | UneSerie ;
 
   constructor(private router: Router, private episodeService: EpisodeService,private bddfilms: Bddfilms, private serieService: SerieService) {
     const navigation = this.router.currentNavigation();
-    const id = navigation?.extras.state?.['elem'] ?? null;
-    console.log(id);
+    this.elem = navigation?.extras.state?.['elem'] ?? null;
 
-    if(id){
-      this.bddfilms.getDetailsFilm(id).subscribe(contenu => {
-        this.elem = contenu;
+    if(this.elem){
+      this.bddfilms.getDetailsFilm(this.elem.id).subscribe(contenu => {
+        Object.assign(this.elem, contenu);
         //if (this.isFilm(this.elem)){
         if(this.elem.listed) {
           this.checkBox = true;
