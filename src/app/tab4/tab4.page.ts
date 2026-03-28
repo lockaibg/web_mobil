@@ -17,23 +17,18 @@ export class Tab4Page {
 
   checkBox!: boolean;
   elem: UnFilm | UneSerie ;
+  private type : string = '';
 
   constructor(private router: Router, private episodeService: EpisodeService,private bddfilms: Bddfilms, private serieService: SerieService) {
     const navigation = this.router.currentNavigation();
     this.elem = navigation?.extras.state?.['elem'] ?? null;
-
-    if(this.elem){
-      this.bddfilms.getDetailsFilm(this.elem.id).subscribe(contenu => {
-        Object.assign(this.elem, contenu);
-        //if (this.isFilm(this.elem)){
-        if(this.elem.listed) {
-          this.checkBox = true;
-        } else {
-          this.checkBox = false;
-        }
-        //}
-      });
+    this.type = navigation?.extras.state?.['type'] ?? '';
     }
+
+  ionViewWillEnter() {
+    this.setupPage();
+  }
+
 
    /** if(this.elem && (this.isSerie(this.elem) || this.isFilm(this.elem))) {
       if(this.elem.listed) {
@@ -41,7 +36,28 @@ export class Tab4Page {
       } else {
         this.checkBox = false;
       }**/
-  }
+
+   setupPage(): void {
+     if(this.elem) {
+       if (this.type === 'film') {
+         this.bddfilms.getDetailsFilm(this.elem.id).subscribe(contenu => {
+           Object.assign(this.elem, contenu);
+
+         });
+       } else {
+         this.bddfilms.getDetailsSerie(this.elem.id).subscribe(contenu => {
+           Object.assign(this.elem, contenu);
+
+         });
+       }
+
+       if (this.elem.listed) {
+         this.checkBox = true;
+       } else {
+         this.checkBox = false;
+       }
+     }
+   }
 
 
 
