@@ -66,10 +66,10 @@
       <div class="action-btn-wrapper">
         <ion-button fill="clear" class="action-btn" (click)="changeStatus(elem)">
           <div class="btn-inner">
-            @if (true) {
+            @if (status === 'NOT') {
               <ion-icon name="square-outline"></ion-icon>
               <span>Pas vu</span>
-            } @else if (false) {
+            } @else if (status === 'EN_COURS') {
               <ion-icon name="play-circle-outline"></ion-icon>
               <span>En cours</span>
             } @else {
@@ -95,7 +95,7 @@
         <div class="action-btn-wrapper">
           <ion-button fill="clear" class="action-btn" (click)="addToList(elem)">
             <div class="btn-inner">
-              @if (true) {
+              @if (listed) {
                 <ion-icon name="checkmark-circle-outline"></ion-icon>
                 <span>Supprimer</span>
               } @else {

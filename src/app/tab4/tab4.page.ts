@@ -6,6 +6,8 @@ import { Episode, EpisodeService } from '../service/episode';
 import { UnFilm } from '../BDD/UnFilm';
 import { UneSerie } from '../BDD/UneSerie';
 import {Bddfilms} from "../BDD/BDDFilms";
+import { AddedService } from '../service/added.service';
+import { WatchedService } from '../service/watched.service';
 
 @Component({
   selector: 'app-tab4',
@@ -15,14 +17,18 @@ import {Bddfilms} from "../BDD/BDDFilms";
 })
 export class Tab4Page {
 
-  checkBox!: boolean;
+  listed!: boolean;
+  status!: string;
   elem: UnFilm | UneSerie ;
   private type : string = '';
 
-  constructor(private router: Router, private episodeService: EpisodeService,private bddfilms: Bddfilms) {
+  constructor(private router: Router, private episodeService: EpisodeService,private bddfilms: Bddfilms, private addedService: AddedService, private watchedService: WatchedService) {
     const navigation = this.router.currentNavigation();
     this.elem = navigation?.extras.state?.['elem'] ?? null;
     this.type = navigation?.extras.state?.['type'] ?? '';
+    const id = this.elem?.id ?? null;
+    addedService.isAdded(id) ? this.listed = true : this.listed = false;
+    watchedService.isWatched(id) ? this.status = 'VUE' : this.status = 'NOT';
   }
 
   ionViewWillEnter() {
