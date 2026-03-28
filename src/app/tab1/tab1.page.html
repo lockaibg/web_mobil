@@ -6,13 +6,13 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-list>
-    @for (episode of getMessages(); track episode) {
-      <div (click)="goToEpisode(episode)">
-        <app-episode [episode]="episode"></app-episode>
-      </div>
-    }
-  </ion-list>
+<ion-content>
+  <form [formGroup]="myForm">
+    <ion-item>
+      <ion-input type="text" formControlName="text" placeholder="Rechercher un film..."></ion-input>
+    </ion-item>
+  </form>
+  <ion-button (click)="onRecherche()">Rechercher</ion-button>
 
+  <app-liste-films *ngIf="recherche" [recherche]="recherche"></app-liste-films>
 </ion-content>

@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
+import {ChangeDetectorRef, Component} from '@angular/core';
 import { inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { EpisodeService, Episode } from '../service/episode';
+import {FormBuilder, FormGroup} from "@angular/forms";
 
 
 @Component({
@@ -11,17 +11,15 @@ import { EpisodeService, Episode } from '../service/episode';
   standalone: false,
 })
 export class Tab1Page {
-  private data = inject(EpisodeService);
+  recherche: string = '';
+  myForm: FormGroup;
 
-  getMessages(): Episode[] {
-    return this.data.getMessages();
+  constructor(private fb: FormBuilder, private cdr: ChangeDetectorRef) {
+    this.myForm = this.fb.group({ text: [''] });
   }
-  constructor(private router: Router) {}
 
-  goToEpisode(episode: Episode) {
-    this.router.navigate(['/tabs/tab4'], {
-    state: { elem: episode }
-  });
-}
-
+  onRecherche() {
+    this.recherche = this.myForm.value.text;
+    this.cdr.detectChanges();
+  }
 }
