@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnChanges } from '@angular/core';
 import { WatchedService } from '../service/watched.service';
 
 @Component({
@@ -7,23 +7,27 @@ import { WatchedService } from '../service/watched.service';
   styleUrls: ['./stats.component.scss'],
   standalone: false
 })
-export class StatsComponent implements OnInit {
+export class StatsComponent implements OnChanges {
+  @Input() refresh: number = 0;
+
   nbFilms: number = 0;
   nbSeries: number = 0;
   total: number = 0;
-
   filmDeg: number = 0;
   serieDeg: number = 0;
 
   constructor(private watchedService: WatchedService) {}
 
-  ngOnInit() {
-    const list = this.watchedService.get();
-    this.nbFilms = list.filter(item => item.type === 'film').length;
-    this.nbSeries = list.filter(item => item.type === 'serie').length;
-    this.total = this.nbFilms + this.nbSeries;
+  ngOnChanges() {
+    this.loadStats();
+  }
 
-    this.filmDeg = this.total > 0 ? (this.nbFilms / this.total) * 360 : 0;
+  loadStats() {
+    const list = this.watchedService.get();
+    this.nbFilms  = list.filter(item => item.type === 'film').length;
+    this.nbSeries = list.filter(item => item.type === 'serie').length;
+    this.total    = this.nbFilms + this.nbSeries;
+    this.filmDeg  = this.total > 0 ? (this.nbFilms / this.total) * 360 : 0;
     this.serieDeg = 360 - this.filmDeg;
   }
 
