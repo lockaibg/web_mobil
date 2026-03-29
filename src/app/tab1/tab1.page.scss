@@ -1,0 +1,43 @@
+ion-header {
+  ion-toolbar {
+    --background: #0a0a1a;
+    --border-width: 0;
+
+    ion-title {
+      font-size: 1.6rem;
+      font-weight: 800;
+      color: #ffffff;
+      letter-spacing: 0.02em;
+    }
+  }
+}
+
+ion-content {
+  --background: #0a0a1a;
+  --padding-top: 8px;
+}
+
+.section {
+  padding: 16px 0 8px 0;
+}
+
+.section-header {
+  padding: 0 16px 10px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.section-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: 0.01em;
+}
+
+.section-underline {
+  width: 40px;
+  height: 3px;
+  background: #2563eb;
+  border-radius: 2px;
+}
