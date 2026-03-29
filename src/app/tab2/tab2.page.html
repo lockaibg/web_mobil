@@ -22,25 +22,59 @@
 </ion-toolbar>
 
 <ion-content>
+  @if (switchPage) {
+    <div class="series">
+      <div class="section">
+        <div class="section-header">
+          <span class="section-title">En Cours</span>
+          <ion-icon name="chevron-forward-outline" class="section-arrow"></ion-icon>
+        </div>
+        <app-list-card [items]="seriesEnCours"></app-list-card>
+      </div>
 
+      <div class="section">
+        <div class="section-header">
+          <span class="section-title">Ma Liste</span>
+          <ion-icon name="chevron-forward-outline" class="section-arrow"></ion-icon>
+        </div>
+        <app-list-card [items]="seriesAjoutes"></app-list-card>
+      </div>
 
-@if (switchPage) {
-  <div class="series">
+      <div class="section">
+        <div class="section-header">
+          <span class="section-title">Tendances</span>
+          <ion-icon name="chevron-forward-outline" class="section-arrow"></ion-icon>
+        </div>
+        <app-list-card [items]="filmsAjoutes"></app-list-card>
+      </div>
+    </div>
+  }
 
-    <app-list-card title="En cours" [items]="seriesEnCours"></app-list-card>
-    <app-list-card title="Ma Liste" [items]="seriesAjoutes"></app-list-card>
-    <app-list-card title="Séries terminés" [items]="seriesVues"></app-list-card>
-    <app-list-card title="Tendance" [items]="filmsAjoutes"></app-list-card>
-  </div>
-}
-@if (!switchPage) {
-  <div class="films">
+  @if (!switchPage) {
+    <div class="films">
+      <div class="section">
+        <div class="section-header">
+          <span class="section-title">Ma Liste</span>
+          <ion-icon name="chevron-forward-outline" class="section-arrow"></ion-icon>
+        </div>
+        <app-list-card [items]="filmsAjoutes"></app-list-card>
+      </div>
 
-    <app-list-card title="Ma Liste" [items]="filmsAjoutes"></app-list-card>
+      <div class="section">
+        <div class="section-header">
+          <span class="section-title">Films regardés</span>
+          <ion-icon name="chevron-forward-outline" class="section-arrow"></ion-icon>
+        </div>
+        <app-list-card [items]="filmsVus"></app-list-card>
+      </div>
 
-    <app-list-card title="Films regardés" [items]="filmsVus"></app-list-card>
-
-    <app-list-card title="Tendance" [items]="filmsAjoutes"></app-list-card>
-  </div>
-}
+      <div class="section">
+        <div class="section-header">
+          <span class="section-title">Tendances</span>
+          <ion-icon name="chevron-forward-outline" class="section-arrow"></ion-icon>
+        </div>
+        <app-list-card [items]="filmsAjoutes"></app-list-card>
+      </div>
+    </div>
+  }
 </ion-content>

@@ -12,3 +12,75 @@
   flex-direction: column;
   align-items: center;
 }
+
+
+ion-header {
+  ion-toolbar {
+    --background: #0a0a1a;
+    --border-width: 0;
+
+    ion-title {
+      h1 {
+        font-size: 1.6rem;
+        font-weight: 800;
+        color: #ffffff;
+        letter-spacing: 0.02em;
+        margin: 0;
+      }
+    }
+  }
+}
+
+ion-toolbar {
+  --background: #0a0a1a;
+  --border-width: 0;
+  padding: 0 16px 8px 16px;
+
+  ion-segment {
+    --background: transparent;
+    width: fit-content;
+    margin: 0 auto;
+
+    ion-segment-button {
+      --background: transparent;
+      --background-checked: #2563eb;
+      --color: rgba(255, 255, 255, 0.5);
+      --color-checked: #ffffff;
+      --border-radius: 20px;
+      --indicator-color: transparent;
+      min-width: 80px;
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+  }
+}
+
+ion-content {
+  --background: #0a0a1a;
+  --padding-top: 8px;
+}
+
+.section {
+  padding: 16px 0 8px 0;
+}
+
+.section-header {
+  padding: 0 16px 10px 16px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-direction: row;
+  border-bottom: 2px solid #2563eb;
+  margin: 0 16px 10px 16px;
+}
+
+.section-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.section-arrow {
+  color: #ffffff;
+  font-size: 1rem;
+}
