@@ -45,7 +45,7 @@
           <span class="section-title">Tendances</span>
           <ion-icon name="chevron-forward-outline" class="section-arrow"></ion-icon>
         </div>
-        <app-liste-films [trending]=2></app-liste-films>
+        <app-list-card [items]="serieTendance"></app-list-card>
       </div>
     </div>
   }
@@ -73,7 +73,7 @@
           <span class="section-title">Tendances</span>
           <ion-icon name="chevron-forward-outline" class="section-arrow"></ion-icon>
         </div>
-        <app-liste-films [trending]=1></app-liste-films>
+        <app-list-card [items]="filmTendance"></app-list-card>
       </div>
     </div>
   }

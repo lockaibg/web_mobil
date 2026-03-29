@@ -135,4 +135,18 @@ export class Bddfilms {
     }
 
   }
+
+  getTendancesFilms(): Observable<UnFilm[]> {
+    const url = `https://api.themoviedb.org/3/trending/movie/week?api_key=${this.apiKey}&language=fr-FR`;
+    return this.httpClient.get<UnePage<any>>(url).pipe(
+      map(res => res.results.map((item: any) => new UnFilm(item)))
+    );
+  }
+
+  getTendancesSeries(): Observable<UneSerie[]> {
+    const url = `https://api.themoviedb.org/3/trending/tv/week?api_key=${this.apiKey}&language=fr-FR`;
+    return this.httpClient.get<UnePage<any>>(url).pipe(
+      map(res => res.results.map((item: any) => new UneSerie(item)))
+    );
+  }
 }

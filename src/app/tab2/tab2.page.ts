@@ -8,6 +8,7 @@ import { UneSerie } from "../BDD/UneSerie";
 import { OnGoingService } from "../service/onGoing.service";
 import { AddedService } from "../service/added.service";
 import { WatchedService } from '../service/watched.service';
+import {Observable} from "rxjs";
 
 
 @Component({
@@ -25,10 +26,11 @@ export class Tab2Page {
   seriesEnCours: UneSerie[] = [];
   seriesAjoutes: UneSerie[] = [];
   seriesVues: UneSerie[] = [];
+  serieTendance: UneSerie[] = [];
 
   filmsVus: UnFilm[] = [];
   filmsAjoutes: UnFilm[] = [];
-
+  filmTendance: UnFilm[] = [];
 
 
   constructor(
@@ -39,7 +41,7 @@ export class Tab2Page {
     private watchedService: WatchedService,
     private bddFilms: Bddfilms
   ) {
-    this.myForm = this.fb.group({ text: [''] });
+    this.myForm = this.fb.group({text: ['']});
   }
 
   //Chargement des données à chaque fois qu'onarrive sur la page
@@ -51,6 +53,7 @@ export class Tab2Page {
 
     this.chargerFilmsAjoute();
     this.chargerFilmsVus();
+    this.chargerTendances();
   }
 
   chargerFilmsAjoute() {
@@ -119,4 +122,16 @@ export class Tab2Page {
     this.cdr.detectChanges();
   }
 
+  private chargerTendances() {
+    this.serieTendance = [];
+    this.filmTendance = [];
+
+    this.bddFilms.getTendancesFilms().subscribe(data => {
+      this.filmTendance = data;
+    });
+
+    this.bddFilms.getTendancesSeries().subscribe(data => {
+      this.serieTendance = data;
+    });
+  }
 }
