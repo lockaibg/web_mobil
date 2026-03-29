@@ -1,9 +1,9 @@
 // ── Variables ──────────────────────────────────────────
 :host {
-  --bg: #0f1117;
+  --bg: #0a0a1a;        // ← était #0f1117
   --surface: #1a1d27;
-  --accent: #ffffff;
-  --text-primary: #ffffff;
+  --accent: #2563eb;    // ← était #ffffff, aligner avec le bleu des autres tabs
+  --text-primary: lightblue;
   --text-secondary: #9aa0b4;
   --border: rgba(255, 255, 255, 0.08);
   --btn-icon-size: 28px;
@@ -12,6 +12,13 @@
 ion-header ion-toolbar {
   --background: var(--bg);
   --color: var(--text-primary);
+  --border-width: 0;
+
+  ion-title {
+    font-size: 1.6rem;
+    font-weight: 800;
+    letter-spacing: 0.02em;
+  }
 }
 
 ion-content {
