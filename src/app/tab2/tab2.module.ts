@@ -10,6 +10,7 @@ import { ListeSeriesComponent} from "../liste-series/liste-series.component";
 import {CardUneSerieComponent} from "../card-une-serie/card-une-serie.component";
 import {Tab1PageModule} from "../tab1/tab1.module";
 import {ListCardComponent} from "../list-card/list-card.component";
+import {ComponentsModule} from "../components.module";
 
 @NgModule({
   imports: [
@@ -20,7 +21,8 @@ import {ListCardComponent} from "../list-card/list-card.component";
     Tab2PageRoutingModule,
     ReactiveFormsModule,
     Tab1PageModule,
-    ListCardComponent
+    ListCardComponent,
+    ComponentsModule
   ],
   declarations: [Tab2Page]
 })

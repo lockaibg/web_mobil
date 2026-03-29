@@ -121,4 +121,18 @@ export class Bddfilms {
     );
   }
 
+  getTendances(type:number):Observable<UnFilm[]|UneSerie[]>{
+    if(type === 1) {
+      const url = `https://api.themoviedb.org/3/trending/movie/week?api_key=${this.apiKey}&sort_by=popularity.desc&language=fr-FR`;
+      return this.httpClient.get<UnePage<any>>(url).pipe(
+        map(res => res.results.map((item: any) => new UnFilm(item)))
+      );
+    }else{
+      const url = `https://api.themoviedb.org/3/trending/tv/week?api_key=${this.apiKey}&sort_by=popularity.desc&language=fr-FR`;
+      return this.httpClient.get<UnePage<any>>(url).pipe(
+        map(res => res.results.map((item: any) => new UneSerie(item)))
+      );
+    }
+
+  }
 }

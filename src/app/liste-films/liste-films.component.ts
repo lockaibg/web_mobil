@@ -18,6 +18,7 @@ import {DataService} from "../service/data.service";
 export class ListeFilmsComponent implements OnInit, OnChanges {
   @Input() recherche!: string;
   @Input() idGenre!:number[];
+  @Input() trending!:number;
   listeFilms: UnFilm[] = [];
   listeSeries: UneSerie[] = [];
   listeMixte: (UnFilm| UneSerie)[] = [];
@@ -33,7 +34,7 @@ export class ListeFilmsComponent implements OnInit, OnChanges {
               private dataService: DataService
   ) {}
 
-  ngOnInit() {return;
+  ngOnInit() {if(this.trending){this.afficherTendances(this.trending);}
   }
 
   ngOnChanges() { if(this.recherche !='') this.lancerRechercheMixte();
@@ -97,6 +98,12 @@ export class ListeFilmsComponent implements OnInit, OnChanges {
       this.listeMixte = fusion.sort((a, b) => b.popularity - a.popularity).slice(0, 50);
 
       this.cdr.detectChanges();
+    });
+  }
+
+  afficherTendances(type:number){
+    this.bddFilms.getTendances(type).subscribe(films =>{
+      this.listeMixte = films.slice(0,10);
     });
   }
 
