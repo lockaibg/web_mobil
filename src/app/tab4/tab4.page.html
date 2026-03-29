@@ -30,12 +30,6 @@
           </p>
         }
 
-        @if (isSerie(elem)) {
-          <p class="meta-line">
-            <span class="meta-label">Durée totale : </span>{{ getTotalDuration(elem) }}min
-          </p>
-        }
-
         @if (isFilm(elem)) {
           <p class="meta-line">
             <span class="meta-label">Durée : </span>{{ elem.duree }}min
@@ -52,7 +46,7 @@
           </p>
         }
 
-        @if (isSerie(elem) || isFilm(elem)) {
+        @if (isFilm(elem)) {
           <p class="meta-line">
             <span class="meta-label">Genre : </span>{{ elem.genre }}
           </p>

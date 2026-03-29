@@ -48,22 +48,6 @@ export class Tab2Page {
 
   //Chargement des données à chaque fois qu'onarrive sur la page
   ionViewWillEnter() {
-    this.onGoingService.add(1396, 2);
-    this.onGoingService.add(1399, 10);
-    this.onGoingService.add(66732, 5);
-    this.onGoingService.add(2316, 8);
-    this.onGoingService.add(94605, 12);
-
-    this.addedService.add(2);
-    this.addedService.add(3);
-    this.addedService.add(4);
-    this.addedService.add(5);
-    this.addedService.add(6);
-    this.addedService.add(7);
-
-
-    this.watchedService.add(120);
-
     this.chargerSeriesEnCours();
     this.chargerSeriesAjoutes();
     this.chargerSeriesVus();

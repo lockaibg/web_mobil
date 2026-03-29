@@ -160,7 +160,7 @@ changeStatus(elem: any) {
     if (this.isFilm(elem)) {
       this.watchedService.add(elem.id);
     } else {
-      this.onGoingService.add(elem.id, elem.nbEpisodes);
+      this.serieWatchedService.add(elem.id);
     }
   } else if (this.status === 'EN_COURS') {
     this.onGoingService.remove(elem.id);
