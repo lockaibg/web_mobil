@@ -18,6 +18,8 @@ export class Tab1Page {
   recherche: string = '';
   myForm: FormGroup;
 
+  refreshStats: number = 0; // pas sur de savoir a quoi ça sert mais en gros c'est pour forcer le rafraichissement de la page quand on ajoute un film ou une série
+
   recemmentAjoute: (UnFilm | UneSerie)[] = [];
   recemmentVu: (UnFilm | UneSerie)[] = [];
 
@@ -31,6 +33,7 @@ export class Tab1Page {
   }
 
   ionViewWillEnter() {
+    this.refreshStats++;
     this.chargerRecemmentAjoute();
     this.chargerRecemmentVu();
   }
