@@ -18,37 +18,37 @@ export class Tab3Page {
       nom: 'Aventure',
       idFilm: 12,
       idSerie: 10759,
-      img: 'assets/genres/aventure.jpg'
+      img: 'assets/genres/aventure.png'
     },
     {
       nom: 'Super Héro',
       idFilm: 878,
       idSerie: 10765,
-      img: 'assets/genres/superhero.jpg'
+      img: 'assets/genres/superhero.png'
     },
     {
       nom: 'Romance',
       idFilm: 10749,
       idSerie: 10766,
-      img: 'assets/genres/romance.jpg'
+      img: 'assets/genres/romance.png'
     },
     {
       nom: 'Thriller',
       idFilm: 53,
       idSerie: 80,
-      img: 'assets/genres/thriller.jpg'
+      img: 'assets/genres/horreur.png'
     },
     {
       nom: 'Horreur',
       idFilm: 27,
       idSerie: 96,
-      img: 'assets/genres/horreur.jpg'
+      img: 'assets/genres/horreur.png'
     },
     {
       nom: 'Dessin animé',
       idFilm: 16,
       idSerie: 16,
-      img: 'assets/genres/animation.jpg'
+      img: 'assets/genres/animation.png'
     }
   ];
 
