@@ -6,7 +6,6 @@ import { Tab2Page } from './tab2.page';
 import { ExploreContainerComponentModule } from '../explore-container/explore-container.module';
 
 import { Tab2PageRoutingModule } from './tab2-routing.module';
-import { ListeSeriesComponent} from "../liste-series/liste-series.component";
 import {CardUneSerieComponent} from "../card-une-serie/card-une-serie.component";
 import {Tab1PageModule} from "../tab1/tab1.module";
 import {ListCardComponent} from "../list-card/list-card.component";
