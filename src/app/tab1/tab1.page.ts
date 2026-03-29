@@ -8,7 +8,6 @@ import {AddedService} from "../service/added.service";
 import {WatchedService} from "../service/watched.service";
 import {Bddfilms} from "../BDD/BDDFilms";
 
-
 @Component({
   selector: 'app-tab1',
   templateUrl: 'tab1.page.html',

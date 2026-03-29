@@ -1,0 +1,29 @@
+<div class="stats-wrapper">
+  <h2 class="stats-title">Ma progression</h2>
+
+  @if (total === 0) {
+    <p class="empty">Aucun contenu vu pour l'instant.</p>
+  } @else {
+    <div class="chart-container">
+      <div class="pie" [style.background]="getPieGradient()">
+        <div class="pie-center">
+          <span class="total-count">{{ total }}</span>
+          <span class="total-label">vus</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="legend">
+      <div class="legend-item">
+        <span class="dot film"></span>
+        <span class="legend-text">Films</span>
+        <span class="legend-value">{{ nbFilms }} <em>({{ getPercent(nbFilms) }})</em></span>
+      </div>
+      <div class="legend-item">
+        <span class="dot serie"></span>
+        <span class="legend-text">Séries</span>
+        <span class="legend-value">{{ nbSeries }} <em>({{ getPercent(nbSeries) }})</em></span>
+      </div>
+    </div>
+  }
+</div>
