@@ -5,10 +5,31 @@
   padding: 0 16px 10px 16px;
 }
 
+
 .card {
   flex: 0 0 auto; /*pour que le scroll horizontal marche*/
   width: 150px;
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.card-image {
+  width: 100%;
+  aspect-ratio: 2 / 3;
+  object-fit: cover;
+  border-radius: 8px;
+}
+.card-title {
+  margin: 0;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-align: center;
+  line-height: 1.2;
+
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }

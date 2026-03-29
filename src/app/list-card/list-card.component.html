@@ -2,7 +2,10 @@
   <h2 class="title">{{ title }}</h2>
   <div class="scroll-horizontal">
     @for (item of items; track item) {
-      <app-card-un-film [film]="$any(item)" class="card"></app-card-un-film>
+      <div class="card">
+        <img [src]="item.poster_path" [alt]="item.title" class="card-image">
+        <p class="card-title">{{ item.title }}</p>
+      </div>
     }
   </div>
   <div class="empty">
