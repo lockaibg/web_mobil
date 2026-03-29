@@ -1,0 +1,33 @@
+.genre-card {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1; // carré
+  background-size: cover;
+  background-position: center;
+  border-radius: 10px;
+  overflow: hidden;
+  cursor: pointer;
+
+  // Assombrir l'image pour que le texte soit lisible
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+    border-radius: 10px;
+  }
+
+  h3 {
+    position: absolute;
+    inset: 0;
+    z-index: 1; // par dessus l'overlay
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    color: white;
+    font-size: 1.2rem;
+    font-weight: bold;
+    text-shadow: 0 1px 4px rgba(0,0,0,0.8);
+  }
+}
