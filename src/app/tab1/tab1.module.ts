@@ -9,6 +9,7 @@ import { Tab1PageRoutingModule } from './tab1-routing.module';
 
 import { CardUnFilmComponent} from "../card-un-film/card-un-film.component";
 import {ListeFilmsComponent} from "../liste-films/liste-films.component";
+import { ListCardComponent } from "../list-card/list-card.component";
 
 
 @NgModule({
@@ -18,7 +19,8 @@ import {ListeFilmsComponent} from "../liste-films/liste-films.component";
         FormsModule,
         ExploreContainerComponentModule,
         Tab1PageRoutingModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        ListCardComponent
     ],
     exports: [
         CardUnFilmComponent

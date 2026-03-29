@@ -15,4 +15,8 @@
   <ion-button (click)="onRecherche()">Rechercher</ion-button>
 
   <app-liste-films [recherche]="recherche"></app-liste-films>
+
+  <app-list-card title="Recemment Ajoutés" [items]="recemmentAjoute"></app-list-card>
+
+  <app-list-card title="Recemment Vus" [items]="recemmentVu"></app-list-card>
 </ion-content>

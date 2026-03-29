@@ -12,9 +12,7 @@ import { DataService } from '../service/data.service';
   selector: 'app-list-card',
   templateUrl: './list-card.component.html',
   styleUrls: ['./list-card.component.scss'],
-  imports: [
-    Tab1PageModule
-  ]
+
 })
 export class ListCardComponent{
   @Input() title: string = '';
