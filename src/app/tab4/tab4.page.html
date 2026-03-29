@@ -36,15 +36,7 @@
           </p>
         }
 
-        @if (isEpisode(elem)) {
-          <p class="meta-line">
-            <span class="meta-label">Saison </span>{{ elem.saison }}
-            <span class="meta-label"> · Épisode </span>{{ elem.numero }}
-          </p>
-          <p class="meta-line">
-            <span class="meta-label">Durée : </span>{{ elem.duree }}min
-          </p>
-        }
+
 
         @if (isFilm(elem)) {
           <p class="meta-line">

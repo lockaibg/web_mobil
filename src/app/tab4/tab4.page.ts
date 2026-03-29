@@ -1,8 +1,5 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { Serie, SerieService } from '../service/serie';
-import { Film } from '../service/film';
-import { Episode, EpisodeService } from '../service/episode';
 import { UnFilm } from '../BDD/UnFilm';
 import { UneSerie } from '../BDD/UneSerie';
 import {Bddfilms} from "../BDD/BDDFilms";
@@ -28,7 +25,6 @@ export class Tab4Page {
   type: 'film' | 'serie' = 'film'; //Typage stricte pour éviter les erreurs
 
   constructor(private router: Router,
-              private episodeService: EpisodeService,
               private bddfilms: Bddfilms,
               private addedService: AddedService,
               private watchedService: WatchedService,
@@ -75,18 +71,15 @@ export class Tab4Page {
     return elem && !this.isSerie(elem);
   }
 
-  isEpisode(elem: any): elem is Episode {
-    return elem && 'numero' in elem;
-  }
 
   getTitle(elem: any): string {
     return elem?.title ?? '';
   }
 
   getPoster(elem: any): string {
-    if (this.isEpisode(elem)) {
+    /*if (this.isEpisode(elem)) {
       return this.episodeService.getPoster(elem);
-    }
+    }*/
     return elem?.posterUrl || 'assets/placeholder.jpg';
   }
 
