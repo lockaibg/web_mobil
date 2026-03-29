@@ -6,6 +6,7 @@ import {Bddfilms} from '../BDD/BDDFilms';
 import {UnFilm} from '../BDD/UnFilm';
 import {Router} from '@angular/router';
 import {UneSerie} from "../BDD/UneSerie";
+import {DataService} from "../service/data.service";
 
 @Component({
   selector: 'app-liste-films',
@@ -26,7 +27,10 @@ export class ListeFilmsComponent implements OnInit, OnChanges {
 
   router = inject(Router);
 
-  constructor(private bddFilms: Bddfilms, private cdr: ChangeDetectorRef) {}
+  constructor(private bddFilms: Bddfilms,
+              private cdr: ChangeDetectorRef,
+              private dataService: DataService
+  ) {}
 
   ngOnInit() {return;
   }
@@ -67,26 +71,8 @@ export class ListeFilmsComponent implements OnInit, OnChanges {
   }
 
   goToFilm(elem: UnFilm| UneSerie) {
-
-    if(this.isFilm(elem) )
-    {
-    this.router.navigate(['/tabs/tab4'], {
-
-      state: {
-        elem: elem, type:'film'
-      }
-
-    });
-    }
-    else{
-      this.router.navigate(['/tabs/tab4'], {
-
-        state: {
-          elem: elem, type:'serie'
-        }
-
-      });
-    }
+    this.dataService.setData(elem);
+    this.router.navigate(['/tabs/tab4']);
   }
 
   isSerie(elem: any): elem is UneSerie{
