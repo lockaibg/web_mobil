@@ -22,8 +22,6 @@ import {ListCardComponent} from "../list-card/list-card.component";
     Tab1PageModule,
     ListCardComponent
   ],
-  declarations: [Tab2Page,
-  ListeSeriesComponent,
-  CardUneSerieComponent]
+  declarations: [Tab2Page]
 })
 export class Tab2PageModule {}

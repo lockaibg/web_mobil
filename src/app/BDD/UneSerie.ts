@@ -9,6 +9,7 @@ export class UneSerie {
   private _synopsis!: string;
   private _nbSaisons!: number;
   private _nbEpisodes!: number;
+  private _popularity!: number;
 
   constructor(obj:any){
     Object.assign(this,obj);
@@ -108,6 +109,14 @@ export class UneSerie {
 
   set nbEpisodes(value: number) {
     this._nbEpisodes = value;
+  }
+
+  set popularity(value: number) {
+    this._popularity = value;
+  }
+
+  get popularity() {
+    return this._popularity;
   }
 
 }

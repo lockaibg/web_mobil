@@ -21,16 +21,7 @@
   </ion-segment>
 </ion-toolbar>
 
-
 <ion-content>
-  <form [formGroup]="myForm">
-    <ion-item>
-      <ion-input type="text" formControlName="text" placeholder="Rechercher un film..."></ion-input>
-    </ion-item>
-  </form>
-  <ion-button (click)="onRecherche()">Rechercher</ion-button>
-
-  <app-liste-series [recherche]="recherche"></app-liste-series>
 
 
 @if (switchPage) {

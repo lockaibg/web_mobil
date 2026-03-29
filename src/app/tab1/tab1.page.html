@@ -5,16 +5,7 @@
     </ion-title>
   </ion-toolbar>
 </ion-header>
-
 <ion-content>
-  <form [formGroup]="myForm">
-    <ion-item>
-      <ion-input type="text" formControlName="text" placeholder="Rechercher un film..."></ion-input>
-    </ion-item>
-  </form>
-  <ion-button (click)="onRecherche()">Rechercher</ion-button>
-
-  <app-liste-films [recherche]="recherche"></app-liste-films>
 
   <app-list-card title="Recemment Ajoutés" [items]="recemmentAjoute"></app-list-card>
 

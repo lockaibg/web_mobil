@@ -11,6 +11,7 @@ import { CardUnFilmComponent} from "../card-un-film/card-un-film.component";
 import {ListeFilmsComponent} from "../liste-films/liste-films.component";
 import { ListCardComponent } from "../list-card/list-card.component";
 import { StatsComponent } from '../stats/stats.component';
+import {ComponentsModule} from "../components.module";
 
 
 @NgModule({
@@ -21,15 +22,11 @@ import { StatsComponent } from '../stats/stats.component';
         ExploreContainerComponentModule,
         Tab1PageRoutingModule,
         ReactiveFormsModule,
-        ListCardComponent
+        ListCardComponent,
     ],
-    exports: [
-        CardUnFilmComponent
-    ],
+
     declarations: [
         Tab1Page,
-        CardUnFilmComponent,
-        ListeFilmsComponent,
         StatsComponent
     ]
 })

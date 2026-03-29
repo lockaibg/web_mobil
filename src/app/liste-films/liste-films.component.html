@@ -1,5 +1,14 @@
-@for (item of listeFilms; track item) {
+<ion-list>
+@for (item of listeMixte; track item) {
   <div (click)="goToFilm(item)">
+    @if(isFilm(item)){
     <app-card-un-film [film]="item"></app-card-un-film>
+    }
+    @else{
+      <app-card-une-serie [serie]="item"></app-card-une-serie>
+    }
   </div>
+} @empty {
+  <p>Aucun résultat pour cette recherche.</p>
 }
+</ion-list>

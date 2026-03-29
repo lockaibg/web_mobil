@@ -8,6 +8,7 @@ export class UnFilm {
   _genre!: string;
   _synopsis!: string;
   _duree!: number;
+  _popularity!: number;
 
   constructor(obj: any) {
     Object.assign(this, obj);
@@ -58,5 +59,13 @@ export class UnFilm {
 
   public get duree(): number { return this._duree; }
   public set duree(value: number) { this._duree = value; }
+
+  set popularity(value: number) {
+    this._popularity = value;
+  }
+
+  get popularity() {
+    return this._popularity;
+  }
 
 }
