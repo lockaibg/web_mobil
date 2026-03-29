@@ -6,7 +6,7 @@ export class AddedService {
 
   private readonly STORAGE_KEY = 'added_films';
   private AddedFilms: number[] = [];
-
+  
   constructor() {
     this.load(); // Charger au démarrage
   }

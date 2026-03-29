@@ -9,6 +9,7 @@ import { OnGoingService } from "../service/onGoing.service";
 import { SeriesAddedService } from "../service/serieAdded.service";
 import { AddedService } from "../service/added.service";
 import { WatchedService } from '../service/watched.service';
+import { SerieWatchedService } from '../service/serieWatched.service';
 
 
 @Component({
@@ -37,7 +38,7 @@ export class Tab2Page {
     private cdr: ChangeDetectorRef,
     private onGoingService: OnGoingService,
     private seriesAddedService: SeriesAddedService,
-    private seriesWatchedService: WatchedService,
+    private seriesWatchedService: SerieWatchedService,
     private addedService: AddedService,
     private watchedService: WatchedService,
     private bddFilms: Bddfilms
@@ -47,11 +48,11 @@ export class Tab2Page {
 
   //Chargement des données à chaque fois qu'onarrive sur la page
   ionViewWillEnter() {
-    this.onGoingService.add(1396);
-    this.onGoingService.add(1399);
-    this.onGoingService.add(66732);
-    this.onGoingService.add(2316);
-    this.onGoingService.add(94605);
+    this.onGoingService.add(1396, 2);
+    this.onGoingService.add(1399, 10);
+    this.onGoingService.add(66732, 5);
+    this.onGoingService.add(2316, 8);
+    this.onGoingService.add(94605, 12);
 
     this.addedService.add(2);
     this.addedService.add(3);
@@ -98,7 +99,7 @@ export class Tab2Page {
     const ids = this.onGoingService.get()
     this.seriesEnCours = [];
     for (const id of ids) {
-      this.bddFilms.getDetailsSerie(id).subscribe((serie: UneSerie) => {
+      this.bddFilms.getDetailsSerie(id.id).subscribe((serie: UneSerie) => {
         this.seriesEnCours.push(serie);
         this.cdr.detectChanges();
       });

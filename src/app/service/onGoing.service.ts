@@ -1,21 +1,26 @@
 import { Injectable } from '@angular/core';
-import { UneSerie } from "../BDD/UneSerie";
+import { SerieWatchedService } from './serieWatched.service';
+
+interface OnGoingSerie {
+  id: number;
+  totalEpisodes: number;
+  watchedEpisodes: number[];
+}
 
 @Injectable({ providedIn: 'root' })
-export class OnGoingService{
+export class OnGoingService {
 
   private readonly STORAGE_KEY = 'onGoing_series';
-  private onGoingSeries: number[] = [];
+  private onGoingSeries: OnGoingSerie[] = [];
 
-  constructor() {
-    this.load(); // Charger au démarrage
+  constructor(private serieWatchedService: SerieWatchedService) {
+    this.load();
   }
 
   private load() {
     const data = localStorage.getItem(this.STORAGE_KEY);
     if (data) {
-      const parsed = JSON.parse(data);
-      this.onGoingSeries = parsed.map((obj: any) => new UneSerie(obj));
+      this.onGoingSeries = JSON.parse(data);
     }
   }
 
@@ -23,24 +28,71 @@ export class OnGoingService{
     localStorage.setItem(this.STORAGE_KEY, JSON.stringify(this.onGoingSeries));
   }
 
-  add(elem: number) {
-    const exists = this.onGoingSeries.find(f => f === elem);
+  add(id: number, totalEpisodes: number) {
+    const exists = this.onGoingSeries.find(s => s.id === id);
     if (!exists) {
-      this.onGoingSeries.push(elem);
+      this.onGoingSeries.push({ id, totalEpisodes, watchedEpisodes: [] });
       this.save();
     }
   }
 
-  remove(elem: number) {
-    this.onGoingSeries = this.onGoingSeries.filter(f => f !== elem);
+  remove(id: number) {
+    this.onGoingSeries = this.onGoingSeries.filter(s => s.id !== id);
     this.save();
   }
 
-  get(): number[] {
+  get(): OnGoingSerie[] {
     return this.onGoingSeries;
   }
 
-  isOnGoing(elem: number): boolean {
-    return this.onGoingSeries.some(f => f === elem);
+  isOnGoing(id: number): boolean {
+    return this.onGoingSeries.some(s => s.id === id);
+  }
+
+  addWatchedEpisode(serieId: number, episode: number) {
+    const serie = this.onGoingSeries.find(s => s.id === serieId);
+    if (serie) {
+      if (!serie.watchedEpisodes.includes(episode)) {
+        serie.watchedEpisodes.push(episode);
+        this.save();
+      }
+      if (this.isFullyWatched(serieId)) {
+        this.serieWatchedService.add(serieId);
+        this.remove(serieId);
+      }
+    }
+  }
+
+  isEpisodeWatched(serieId: number, episode: number): boolean {
+    const serie = this.onGoingSeries.find(s => s.id === serieId);
+    return serie?.watchedEpisodes.includes(episode) ?? false;
+  }
+
+  isFullyWatched(serieId: number): boolean {
+    const serie = this.onGoingSeries.find(s => s.id === serieId);
+    if (!serie) return false;
+    return serie.watchedEpisodes.length === serie.totalEpisodes;
+  }
+
+  removeWatchedEpisode(serieId: number, episode: number, totalEpisodes: number) {
+    let serie = this.onGoingSeries.find(s => s.id === serieId);
+
+    if (!serie) {
+      const allEpisodes = Array.from({ length: totalEpisodes }, (_, i) => i + 1)
+                              .filter(ep => ep !== episode);
+      if (allEpisodes.length === 0) {
+        this.serieWatchedService.remove(serieId);
+      } else {
+        this.onGoingSeries.push({ id: serieId, totalEpisodes, watchedEpisodes: allEpisodes });
+        this.serieWatchedService.remove(serieId);
+      }
+    } else {
+      serie.watchedEpisodes = serie.watchedEpisodes.filter(ep => ep !== episode);
+      if (serie.watchedEpisodes.length === 0) {
+        this.remove(serieId);
+        return;
+      }
+    }
+    this.save();
   }
 }

@@ -2,21 +2,20 @@ import { Injectable } from '@angular/core';
 import { UneSerie } from '../BDD/UneSerie';
 
 @Injectable({ providedIn: 'root' })
-export class SeriesAddedService {
+export class SerieWatchedService {
 
   private readonly STORAGE_KEY = 'watched_series';
   private WatchedSeries: number[] = [];
 
   constructor() {
-    this.load(); // Charger au démarrage
+    this.load(); 
   }
 
   // Charger depuis localStorage
   private load() {
     const data = localStorage.getItem(this.STORAGE_KEY);
     if (data) {
-      const parsed = JSON.parse(data);
-      this.WatchedSeries = parsed.map((obj: any) => new UneSerie(obj));
+      this.WatchedSeries = JSON.parse(data); 
     }
   }
 

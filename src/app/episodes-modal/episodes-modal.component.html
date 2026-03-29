@@ -1,0 +1,40 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>{{ titre }}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="dismiss()">
+        <ion-icon name="close-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  @for (saison of saisons; track saison.numero) {
+    <ion-item-group>
+
+      <ion-item-divider sticky>
+        <ion-label>Saison {{ saison.numero }}</ion-label>
+      </ion-item-divider>
+
+      @for (ep of saison.episodes; track ep.numero) {
+        <ion-item>
+            @if (isWatched(ep)) {
+                <div (click)="epRemove(ep.numero, saison.numero)" class="watched-icon">
+                    <ion-icon name="checkbox-outline" slot="start"></ion-icon>
+                </div>
+            } @else {
+                <div (click)="epAdd(ep.numero, saison.numero)" class="watched-icon">
+                    <ion-icon name="square-outline" slot="start"></ion-icon>
+                </div>
+            }
+          <ion-label>
+            <h3>Épisode {{ ep.numero }}</h3>
+            <p>S{{ saison.numero }} · E{{ ep.numero }}</p>
+          </ion-label>
+        </ion-item>
+      }
+
+    </ion-item-group>
+  }
+</ion-content>

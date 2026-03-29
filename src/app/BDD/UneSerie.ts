@@ -9,8 +9,6 @@ export class UneSerie {
   private _synopsis!: string;
   private _nbSaisons!: number;
   private _nbEpisodes!: number;
-  private _listed!: boolean;
-  private _status!: string;
 
   constructor(obj:any){
     Object.assign(this,obj);
@@ -28,8 +26,6 @@ export class UneSerie {
     if(obj.credits?.cast){
       this._acteur = obj.credits.cast.slice(0,5).map((a: any) => a.name).join(', ');
     }
-    this._status = "NOT";
-    this._listed = false;
   }
 
   public get poster_path(): string {
@@ -73,14 +69,6 @@ export class UneSerie {
     return this._nbEpisodes;
   }
 
-  public get listed(): boolean {
-    return this._listed;
-  }
-
-  public get status(): string {
-    return this._status;
-  }
-
 
   set id(value: number) {
     this._id = value;
@@ -122,11 +110,4 @@ export class UneSerie {
     this._nbEpisodes = value;
   }
 
-  set listed(value: boolean) {
-    this._listed = value;
-  }
-
-  set status(value: string) {
-    this._status = value;
-  }
 }
