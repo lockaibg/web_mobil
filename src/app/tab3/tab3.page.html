@@ -14,5 +14,25 @@
   </form>
   <ion-button (click)="onRecherche()">Rechercher</ion-button>
 
-  <app-liste-films [recherche]="recherche"></app-liste-films>
+  @if (recherche==='' && genre.length ===0) {
+    <ion-grid>
+      <ion-row>
+        @for (g of categories; track g.nom) {
+          <ion-col size="6" (click)="afficherGenre(g)">
+            <div class="genre-card" [style.background-image]="'url('+g.img+')'">
+              <h3>{{ g.nom }}</h3>
+            </div>
+          </ion-col>
+        }
+      </ion-row>
+    </ion-grid>
+  } @else {
+    <ion-button fill="clear" color="medium" (click)="resetRecherche()">
+      <ion-icon name="arrow-back-outline" slot="start"></ion-icon>
+      Retour aux catégories
+    </ion-button>
+
+    <app-liste-films [recherche]="recherche" [idGenre]="genre"></app-liste-films>
+  }
+
 </ion-content>

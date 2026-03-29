@@ -17,6 +17,7 @@ import {DataService} from "../service/data.service";
 
 export class ListeFilmsComponent implements OnInit, OnChanges {
   @Input() recherche!: string;
+  @Input() idGenre!:number[];
   listeFilms: UnFilm[] = [];
   listeSeries: UneSerie[] = [];
   listeMixte: (UnFilm| UneSerie)[] = [];
@@ -35,7 +36,8 @@ export class ListeFilmsComponent implements OnInit, OnChanges {
   ngOnInit() {return;
   }
 
-  ngOnChanges() { this.lancerRechercheMixte(); }
+  ngOnChanges() { if(this.recherche !='') this.lancerRechercheMixte();
+    else{this.voirGenre(this.idGenre);}}
 
   initListeFilms() {
     const urlFilms = `https://api.themoviedb.org/3/search/movie?api_key=${this.apiKey}&query=${this.recherche}`;
@@ -81,4 +83,21 @@ export class ListeFilmsComponent implements OnInit, OnChanges {
   isFilm(elem: any):elem is UnFilm{
     return elem && !('nbSaisons' in elem);
   }
+
+  voirGenre(genre: number[]) {
+    this.listeMixte = [];
+
+    forkJoin({
+      films: this.bddFilms.decouvrirFilms(genre[0]),
+      series: this.bddFilms.decouvrirSeries(genre[1])
+    }).subscribe(({ films, series }) => {
+
+      const fusion = [...films, ...series];
+
+      this.listeMixte = fusion.sort((a, b) => b.popularity - a.popularity).slice(0, 50);
+
+      this.cdr.detectChanges();
+    });
+  }
+
 }
