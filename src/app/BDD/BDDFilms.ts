@@ -10,6 +10,7 @@ import { UnePage } from './UnePage';
 export class Bddfilms {
   listeFilms: UnFilm[] = [];
   listeSeries: UneSerie[] = [];
+  private apiKey = "e9a97e2e731b2968cddc7c13647130fe";
 
   constructor(private httpClient: HttpClient) {}
 
@@ -93,16 +94,31 @@ export class Bddfilms {
 
 
   public getDetailsFilm(id:number): Observable<UnFilm> {
-    const apiKey = "e9a97e2e731b2968cddc7c13647130fe";
-    const url = `https://api.themoviedb.org/3/movie/${id}?api_key=${apiKey}&append_to_response=credits`;
+
+    const url = `https://api.themoviedb.org/3/movie/${id}?api_key=${this.apiKey}&append_to_response=credits`;
     return this.httpClient.get<any>(url).pipe(map(data => {return new UnFilm(data);}));
   }
 
   public getDetailsSerie(id:number): Observable<UneSerie> {
-    const apiKey = "e9a97e2e731b2968cddc7c13647130fe";
-    const url = `https://api.themoviedb.org/3/tv/${id}?api_key=${apiKey}&append_to_response=credits`;
+
+    const url = `https://api.themoviedb.org/3/tv/${id}?api_key=${this.apiKey}&append_to_response=credits`;
     return this.httpClient.get<any>(url).pipe(map(data => {return new UneSerie(data);}));
   }
 
+
+  decouvrirFilms(genreId: number): Observable<UnFilm[]> {
+    const url = `https://api.themoviedb.org/3/discover/movie?api_key=${this.apiKey}&with_genres=${genreId}&sort_by=popularity.desc&language=fr-FR`;
+    return this.httpClient.get<UnePage<any>>(url).pipe(
+      map(res => res.results.map((item: any) => new UnFilm(item)))
+    );
+  }
+
+
+  decouvrirSeries(genreId: number): Observable<UneSerie[]> {
+    const url = `https://api.themoviedb.org/3/discover/tv?api_key=${this.apiKey}&with_genres=${genreId}&sort_by=popularity.desc&language=fr-FR`;
+    return this.httpClient.get<UnePage<any>>(url).pipe(
+      map(res => res.results.map((item: any) => new UneSerie(item)))
+    );
+  }
 
 }
