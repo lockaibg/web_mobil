@@ -9,6 +9,7 @@ import { Tab1PageRoutingModule } from './tab1-routing.module';
 
 import { CardUnFilmComponent} from "../card-un-film/card-un-film.component";
 import {ListeFilmsComponent} from "../liste-films/liste-films.component";
+import { StatsComponent } from '../stats/stats.component';
 
 
 @NgModule({
@@ -26,7 +27,8 @@ import {ListeFilmsComponent} from "../liste-films/liste-films.component";
     declarations: [
         Tab1Page,
         CardUnFilmComponent,
-        ListeFilmsComponent
+        ListeFilmsComponent,
+        StatsComponent
     ]
 })
 export class Tab1PageModule {}

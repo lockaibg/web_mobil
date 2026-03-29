@@ -3,7 +3,6 @@ import { inject } from '@angular/core';
 import { Router } from '@angular/router';
 import {FormBuilder, FormGroup} from "@angular/forms";
 
-
 @Component({
   selector: 'app-tab1',
   templateUrl: 'tab1.page.html',
