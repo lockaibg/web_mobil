@@ -5,12 +5,24 @@
     </ion-title>
   </ion-toolbar>
 </ion-header>
+
 <ion-content>
+  <div class="section">
+    <div class="section-header">
+      <span class="section-title">En Cours</span>
+      <div class="section-underline"></div>
+    </div>
+    <app-list-card [items]="recemmentVu"></app-list-card>
+  </div>
 
-  <app-list-card title="Recemment Ajoutés" [items]="recemmentAjoute"></app-list-card>
-
-  <app-list-card title="Recemment Vus" [items]="recemmentVu"></app-list-card>
+  <div class="section">
+    <div class="section-header">
+      <span class="section-title">Ma Liste</span>
+      <div class="section-underline"></div>
+    </div>
+    <app-list-card [items]="recemmentAjoute"></app-list-card>
+  </div>
 
   <app-stats [refresh]="refreshStats"></app-stats>
-
 </ion-content>
+
