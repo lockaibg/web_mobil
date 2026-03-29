@@ -36,118 +36,20 @@
 @if (switchPage) {
   <div class="series">
 
-    <!--SERIE EN COURS-->
-    <div class="list-row">
-      <h2 class="list-row-title">Mes séries en cours</h2>
-      <div class="scroll-horizontal">
-        @for (serie of seriesEnCours; track serie.id) {
-          <div class="card">
-            <app-card-une-serie [serie]="serie" class="custom-scroll-card"></app-card-une-serie>
-          </div>
-        }
-      </div>
-      @if (seriesEnCours.length === 0) {
-        <p>Aucune série en cours.</p>
-      }
-    </div>
-
-    <!--SERIE AJOUTES-->
-    <div class="list-row">
-      <h2 class="list-row-title">Ma liste</h2>
-      <div class="scroll-horizontal">
-        @for (serie of seriesAjoutes; track serie.id) {
-          <div class="card">
-            <app-card-une-serie [serie]="serie" class="custom-scroll-card"></app-card-une-serie>
-          </div>
-        }
-      </div>
-      @if (seriesAjoutes.length === 0) {
-        <p>Aucune série ajouté à votre liste.</p>
-      }
-    </div>
-
-    <!--SERIE REGARDE-->
-    <div class="list-row">
-      <h2 class="list-row-title">Séries regardés</h2>
-      <div class="scroll-horizontal">
-        @for (serie of seriesVues; track serie.id) {
-          <div class="card">
-            <img [src]="serie.poster_path" [alt]="serie.title" class="poster">
-            <p class="card-title">{{ serie.title }}</p>
-          </div>
-        }
-      </div>
-      @if (seriesEnCours.length === 0) {
-        <p>Aucune série en cours.</p>
-      }
-    </div>
-
-    <!--SERIE TENDANCE-->
-    <div class="list-row">
-      <h2 class="list-row-title">Tendances</h2>
-      <div class="scroll-horizontal">
-        @for (serie of seriesVues; track serie.id) {
-          <div class="card">
-            <img [src]="serie.poster_path" [alt]="serie.title" class="poster">
-            <p class="card-title">{{ serie.title }}</p>
-          </div>
-        }
-      </div>
-      @if (seriesEnCours.length === 0) {
-        <p>Aucune série en cours.</p>
-      }
-    </div>
+    <app-list-card title="En cours" [items]="seriesEnCours"></app-list-card>
+    <app-list-card title="Ma Liste" [items]="seriesAjoutes"></app-list-card>
+    <app-list-card title="Séries terminés" [items]="seriesVues"></app-list-card>
+    <app-list-card title="Tendance" [items]="filmsAjoutes"></app-list-card>
   </div>
 }
 @if (!switchPage) {
   <div class="films">
 
-    <!--FILM EN COURS-->
-    <div class="list-row">
-      <h2 class="list-row-title">Ma Liste</h2>
-      <div class="scroll-horizontal">
-      @for (film of filmsAjoutes; track film.id) {
-        <div class="card">
-          <app-card-un-film [film]="film" class="custom-scroll-card"></app-card-un-film>
-        </div>
-      }
-      </div>
-      @if (filmsAjoutes.length === 0) {
-        <p>Aucun films ajouté à votre liste.</p>
-      }
-    </div>
+    <app-list-card title="Ma Liste" [items]="filmsAjoutes"></app-list-card>
 
-    <!--FILM REGARDE-->
-    <div class="list-row">
-      <h2 class="list-row-title">Films regardés</h2>
-      <div class="scroll-horizontal">
-        @for (film of filmsVus; track film.id) {
-          <div class="card">
-            <app-card-un-film [film]="film" class="custom-scroll-card"></app-card-un-film>
-          </div>
-        }
-      </div>
-      @if (filmsAjoutes.length === 0) {
-        <p>Aucun films ajouté à votre liste.</p>
-      }
-    </div>
+    <app-list-card title="Films regardés" [items]="filmsVus"></app-list-card>
 
-    <!--FILM TENDANCe-->
-    <div class="list-row">
-      <h2 class="list-row-title">Tendance</h2>
-      <div class="scroll-horizontal">
-        @for (film of filmsAjoutes; track film.id) {
-          <div class="card">
-            <img [src]="film.poster_path" [alt]="film.title" class="poster">
-            <p class="card-title">{{ film.title }}</p>
-          </div>
-        }
-      </div>
-      @if (filmsAjoutes.length === 0) {
-        <p>Aucun films ajouté à votre liste.</p>
-      }
-    </div>
+    <app-list-card title="Tendance" [items]="filmsAjoutes"></app-list-card>
   </div>
-
 }
 </ion-content>

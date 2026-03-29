@@ -9,6 +9,7 @@ import { Tab2PageRoutingModule } from './tab2-routing.module';
 import { ListeSeriesComponent} from "../liste-series/liste-series.component";
 import {CardUneSerieComponent} from "../card-une-serie/card-une-serie.component";
 import {Tab1PageModule} from "../tab1/tab1.module";
+import {ListCardComponent} from "../list-card/list-card.component";
 
 @NgModule({
   imports: [
@@ -18,7 +19,8 @@ import {Tab1PageModule} from "../tab1/tab1.module";
     ExploreContainerComponentModule,
     Tab2PageRoutingModule,
     ReactiveFormsModule,
-    Tab1PageModule
+    Tab1PageModule,
+    ListCardComponent
   ],
   declarations: [Tab2Page,
   ListeSeriesComponent,
