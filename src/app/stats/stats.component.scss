@@ -1,0 +1,92 @@
+.stats-wrapper {
+  padding: 24px 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+}
+
+.stats-title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  opacity: 0.8;
+  margin: 0;
+}
+
+.chart-container {
+  display: flex;
+  justify-content: center;
+}
+
+.pie {
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.pie-center {
+  width: 90px;
+  height: 90px;
+  background: var(--ion-background-color, #121212);
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.total-count {
+  font-size: 1.6rem;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.total-label {
+  font-size: 0.75rem;
+  opacity: 0.6;
+}
+
+.legend {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  max-width: 260px;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  flex-shrink: 0;
+
+  &.film  { background: #e63946; }
+  &.serie { background: #457b9d; }
+}
+
+.legend-text {
+  flex: 1;
+  font-weight: 600;
+}
+
+.legend-value {
+  font-size: 0.9rem;
+  em { opacity: 0.6; font-style: normal; }
+}
+
+.empty {
+  opacity: 0.5;
+  font-style: italic;
+}
