@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
-import { UnFilm } from '../BDD/UnFilm';
+import { SavedMedia} from "../BDD/SavedMedia";
 
 @Injectable({ providedIn: 'root' })
 export class WatchedService {
 
-  private readonly STORAGE_KEY = 'watched_films';
-  private watchedFilms: number[] = [];
+  private readonly STORAGE_KEY = 'watched_media';
+  private watchedList: SavedMedia[] = [];
 
   constructor() {
     this.load(); // Charger au démarrage
@@ -15,34 +15,34 @@ export class WatchedService {
   private load() {
     const data = localStorage.getItem(this.STORAGE_KEY);
     if (data) {
-      const parsed = JSON.parse(data);
-      this.watchedFilms = parsed.map((obj: any) => new UnFilm(obj));
+      this.watchedList = JSON.parse(data);
     }
   }
 
   // Sauvegarder dans localStorage
   private save() {
-    localStorage.setItem(this.STORAGE_KEY, JSON.stringify(this.watchedFilms));
+    localStorage.setItem(this.STORAGE_KEY, JSON.stringify(this.watchedList));
   }
 
-  add(elem: number) {
-    const exists = this.watchedFilms.find(f => f === elem);
+  add(id: number, type: 'film' | 'serie') {
+    const exists = this.watchedList.find(item => item.id === id && item.type === type);
+
     if (!exists) {
-      this.watchedFilms.push(elem);
+      this.watchedList.push({ id, type });
       this.save();
     }
   }
 
-  remove(elem: number) {
-    this.watchedFilms = this.watchedFilms.filter(f => f !== elem);
+  remove(id: number, type: 'film' | 'serie') {
+    this.watchedList = this.watchedList.filter(item => !(item.id === id && item.type === type));
     this.save();
   }
 
-  get(): number[] {
-    return this.watchedFilms;
+  get(): SavedMedia[] {
+    return this.watchedList;
   }
 
-  isWatched(elem: number): boolean {
-    return this.watchedFilms.some(f => f === elem);
+  isWatched(id: number, type: 'film' | 'serie'): boolean {
+    return this.watchedList.some(item => item.id === id && item.type === type);
   }
 }

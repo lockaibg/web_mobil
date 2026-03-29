@@ -6,10 +6,8 @@ import { UnFilm } from '../BDD/UnFilm';
 import { UneSerie } from "../BDD/UneSerie";
 
 import { OnGoingService } from "../service/onGoing.service";
-import { SeriesAddedService } from "../service/serieAdded.service";
 import { AddedService } from "../service/added.service";
 import { WatchedService } from '../service/watched.service';
-import { SerieWatchedService } from '../service/serieWatched.service';
 
 
 @Component({
@@ -37,8 +35,6 @@ export class Tab2Page {
     private fb: FormBuilder,
     private cdr: ChangeDetectorRef,
     private onGoingService: OnGoingService,
-    private seriesAddedService: SeriesAddedService,
-    private seriesWatchedService: SerieWatchedService,
     private addedService: AddedService,
     private watchedService: WatchedService,
     private bddFilms: Bddfilms
@@ -48,6 +44,7 @@ export class Tab2Page {
 
   //Chargement des données à chaque fois qu'onarrive sur la page
   ionViewWillEnter() {
+
     this.chargerSeriesEnCours();
     this.chargerSeriesAjoutes();
     this.chargerSeriesVus();
@@ -57,10 +54,11 @@ export class Tab2Page {
   }
 
   chargerFilmsAjoute() {
-    const ids = this.addedService.get();
+    const medias = this.addedService.get().filter(m => m.type === 'film');
     this.filmsAjoutes = [];
-    for (const id of ids) {
-      this.bddFilms.getDetailsFilm(id).subscribe((film: UnFilm) => {
+
+    for (const media of medias) {
+      this.bddFilms.getDetailsFilm(media.id).subscribe((film: UnFilm) => {
         this.filmsAjoutes.push(film);
         this.cdr.detectChanges();
       });
@@ -69,10 +67,11 @@ export class Tab2Page {
 
 
   private chargerFilmsVus() {
-    const ids = this.watchedService.get();
+    const medias = this.watchedService.get().filter(m => m.type === 'film');
     this.filmsVus = [];
-    for (const id of ids) {
-      this.bddFilms.getDetailsFilm(id).subscribe((film: UnFilm) => {
+
+    for (const media of medias) {
+      this.bddFilms.getDetailsFilm(media.id).subscribe((film: UnFilm) => {
         this.filmsVus.push(film);
         this.cdr.detectChanges();
       });
@@ -80,10 +79,11 @@ export class Tab2Page {
   }
 
   private chargerSeriesEnCours() {
-    const ids = this.onGoingService.get()
+    const medias = this.onGoingService.get().filter(m => m.type === 'serie');
     this.seriesEnCours = [];
-    for (const id of ids) {
-      this.bddFilms.getDetailsSerie(id.id).subscribe((serie: UneSerie) => {
+
+    for (const media of medias) {
+      this.bddFilms.getDetailsSerie(media.id).subscribe((serie: UneSerie) => {
         this.seriesEnCours.push(serie);
         this.cdr.detectChanges();
       });
@@ -91,10 +91,11 @@ export class Tab2Page {
   }
 
   private chargerSeriesAjoutes() {
-    const ids = this.seriesAddedService.get()
+    const medias = this.addedService.get().filter(m => m.type === 'serie');
     this.seriesAjoutes = [];
-    for (const id of ids) {
-      this.bddFilms.getDetailsSerie(id).subscribe((serie: UneSerie) => {
+
+    for (const media of medias) {
+      this.bddFilms.getDetailsSerie(media.id).subscribe((serie: UneSerie) => {
         this.seriesAjoutes.push(serie);
         this.cdr.detectChanges();
       });
@@ -102,10 +103,11 @@ export class Tab2Page {
   }
 
   private chargerSeriesVus() {
-    const ids = this.seriesWatchedService.get()
+    const medias = this.watchedService.get().filter(m => m.type === 'serie');
     this.seriesVues = [];
-    for (const id of ids) {
-      this.bddFilms.getDetailsSerie(id).subscribe((serie: UneSerie) => {
+
+    for (const media of medias) {
+      this.bddFilms.getDetailsSerie(media.id).subscribe((serie: UneSerie) => {
         this.seriesVues.push(serie);
         this.cdr.detectChanges();
       });

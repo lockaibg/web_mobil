@@ -1,98 +1,84 @@
 import { Injectable } from '@angular/core';
-import { SerieWatchedService } from './serieWatched.service';
-
-interface OnGoingSerie {
-  id: number;
-  totalEpisodes: number;
-  watchedEpisodes: number[];
-}
+import { SavedMedia} from "../BDD/SavedMedia";
 
 @Injectable({ providedIn: 'root' })
 export class OnGoingService {
 
-  private readonly STORAGE_KEY = 'onGoing_series';
-  private onGoingSeries: OnGoingSerie[] = [];
+  private readonly STORAGE_KEY = 'on_going_media';
+  private onGoingList: SavedMedia[] = [];
 
-  constructor(private serieWatchedService: SerieWatchedService) {
-    this.load();
+  constructor() {
+    this.load(); // Charger au démarrage
   }
 
+  // Charger depuis localStorage
   private load() {
     const data = localStorage.getItem(this.STORAGE_KEY);
     if (data) {
-      this.onGoingSeries = JSON.parse(data);
+      this.onGoingList = JSON.parse(data);
     }
   }
 
+  // Sauvegarder dans localStorage
   private save() {
-    localStorage.setItem(this.STORAGE_KEY, JSON.stringify(this.onGoingSeries));
+    localStorage.setItem(this.STORAGE_KEY, JSON.stringify(this.onGoingList));
   }
 
-  add(id: number, totalEpisodes: number) {
-    const exists = this.onGoingSeries.find(s => s.id === id);
+  add(id: number, type: 'film' | 'serie') {
+    const exists = this.onGoingList.find(item => item.id === id && item.type === type);
+
     if (!exists) {
-      this.onGoingSeries.push({ id, totalEpisodes, watchedEpisodes: [] });
+      this.onGoingList.push({ id, type });
       this.save();
     }
   }
 
-  remove(id: number) {
-    this.onGoingSeries = this.onGoingSeries.filter(s => s.id !== id);
+  remove(id: number, type: 'film' | 'serie') {
+    this.onGoingList = this.onGoingList.filter(item => !(item.id === id && item.type === type));
     this.save();
   }
 
-  get(): OnGoingSerie[] {
-    return this.onGoingSeries;
+  get(): SavedMedia[] {
+    return this.onGoingList;
   }
 
-  isOnGoing(id: number): boolean {
-    return this.onGoingSeries.some(s => s.id === id);
+  isOnGoing(id: number, type: 'film' | 'serie'): boolean {
+    return this.onGoingList.some(item => item.id === id && item.type === type);
   }
 
-  addWatchedEpisode(serieId: number, episode: number) {
-    const serie = this.onGoingSeries.find(s => s.id === serieId);
-    if (serie) {
-      if (!serie.watchedEpisodes.includes(episode)) {
-        serie.watchedEpisodes.push(episode);
+  isEpisodeWatched(id_serie: number, numeroGlobal: number) {
+    const media = this.onGoingList.find(item => item.id === id_serie && item.type === 'serie');
+    if (media && media.episodesVus) {
+      return media.episodesVus.includes(numeroGlobal);
+    }
+    return false;
+  }
+
+  addWatchedEpisode(id_serie: number, numeroGlobal: number) {
+    const media = this.onGoingList.find(item => item.id === id_serie && item.type === 'serie');
+
+    if (media) {
+      if (!media.episodesVus) {
+        media.episodesVus = [];
+      }
+      if (!media.episodesVus.includes(numeroGlobal)) {
+        media.episodesVus.push(numeroGlobal);
         this.save();
       }
-      if (this.isFullyWatched(serieId)) {
-        this.serieWatchedService.add(serieId);
-        this.remove(serieId);
-      }
     }
   }
 
-  isEpisodeWatched(serieId: number, episode: number): boolean {
-    const serie = this.onGoingSeries.find(s => s.id === serieId);
-    return serie?.watchedEpisodes.includes(episode) ?? false;
-  }
+  removeWatchedEpisode(id_serie: number, numeroGlobal: number, totalEpisodes: number) {
+    const media = this.onGoingList.find(item => item.id === id_serie && item.type === 'serie');
 
-  isFullyWatched(serieId: number): boolean {
-    const serie = this.onGoingSeries.find(s => s.id === serieId);
-    if (!serie) return false;
-    return serie.watchedEpisodes.length === serie.totalEpisodes;
-  }
+    if (media && media.episodesVus) {
+      media.episodesVus = media.episodesVus.filter(ep => ep !== numeroGlobal);
 
-  removeWatchedEpisode(serieId: number, episode: number, totalEpisodes: number) {
-    let serie = this.onGoingSeries.find(s => s.id === serieId);
-
-    if (!serie) {
-      const allEpisodes = Array.from({ length: totalEpisodes }, (_, i) => i + 1)
-                              .filter(ep => ep !== episode);
-      if (allEpisodes.length === 0) {
-        this.serieWatchedService.remove(serieId);
+      if (media.episodesVus.length === 0) {
+        this.remove(id_serie, 'serie');
       } else {
-        this.onGoingSeries.push({ id: serieId, totalEpisodes, watchedEpisodes: allEpisodes });
-        this.serieWatchedService.remove(serieId);
-      }
-    } else {
-      serie.watchedEpisodes = serie.watchedEpisodes.filter(ep => ep !== episode);
-      if (serie.watchedEpisodes.length === 0) {
-        this.remove(serieId);
-        return;
+        this.save();
       }
     }
-    this.save();
   }
 }

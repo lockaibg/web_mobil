@@ -6,6 +6,7 @@ import {CardUneSerieComponent} from "../card-une-serie/card-une-serie.component"
 import {Tab1PageModule} from "../tab1/tab1.module";
 import {state} from "@angular/animations";
 import {Router} from "@angular/router";
+import { DataService } from '../service/data.service';
 
 @Component({
   selector: 'app-list-card',
@@ -19,11 +20,10 @@ export class ListCardComponent{
   @Input() title: string = '';
   @Input() items: (UnFilm|UneSerie)[] = [];
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private dataService: DataService) { }
 
   goToDetails(item: UnFilm | UneSerie) {
-    this.router.navigate(['/tabs/tab4'], {
-      state: { elem: item }
-    });
+    this.dataService.setData(item);
+    this.router.navigate(['/tabs/tab4']);
   }
 }

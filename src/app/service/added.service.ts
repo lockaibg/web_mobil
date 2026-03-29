@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
-import { UnFilm } from '../BDD/UnFilm';
+import { SavedMedia} from "../BDD/SavedMedia";
 
 @Injectable({ providedIn: 'root' })
 export class AddedService {
 
-  private readonly STORAGE_KEY = 'added_films';
-  private AddedFilms: number[] = [];
-  
+  private readonly STORAGE_KEY = 'added_media';
+  private addedList: SavedMedia[] = [];
+
   constructor() {
     this.load(); // Charger au démarrage
   }
@@ -15,34 +15,34 @@ export class AddedService {
   private load() {
     const data = localStorage.getItem(this.STORAGE_KEY);
     if (data) {
-      const parsed = JSON.parse(data);
-      this.AddedFilms = parsed.map((obj: any) => new UnFilm(obj));
+      this.addedList = JSON.parse(data);
     }
   }
 
   // Sauvegarder dans localStorage
   private save() {
-    localStorage.setItem(this.STORAGE_KEY, JSON.stringify(this.AddedFilms));
+    localStorage.setItem(this.STORAGE_KEY, JSON.stringify(this.addedList));
   }
 
-  add(elem: number) {
-    const exists = this.AddedFilms.find(f => f === elem);
+  add(id: number, type: 'film' | 'serie') {
+    const exists = this.addedList.find(item => item.id === id && item.type === type);
+
     if (!exists) {
-      this.AddedFilms.push(elem);
+      this.addedList.push({ id, type });
       this.save();
     }
   }
 
-  remove(elem: number) {
-    this.AddedFilms = this.AddedFilms.filter(f => f !== elem);
+  remove(id: number, type: 'film' | 'serie') {
+    this.addedList = this.addedList.filter(item => !(item.id === id && item.type === type));
     this.save();
   }
 
-  get(): number[] {
-    return this.AddedFilms;
+  get(): SavedMedia[] {
+    return this.addedList;
   }
 
-  isAdded(elem: number): boolean {
-    return this.AddedFilms.some(f => f === elem);
+  isAdded(id: number, type: 'film' | 'serie'): boolean {
+    return this.addedList.some(item => item.id === id && item.type === type);
   }
 }

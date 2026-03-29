@@ -9,10 +9,9 @@ import {Bddfilms} from "../BDD/BDDFilms";
 import { AddedService } from '../service/added.service';
 import { WatchedService } from '../service/watched.service';
 import { OnGoingService } from '../service/onGoing.service';
-import { SeriesAddedService } from '../service/serieAdded.service';
-import { SerieWatchedService } from '../service/serieWatched.service';
 import { ModalController } from '@ionic/angular';
 import { EpisodesModalComponent } from '../episodes-modal/episodes-modal.component';
+import { DataService } from '../service/data.service';
 
 
 @Component({
@@ -25,29 +24,31 @@ export class Tab4Page {
 
   listed!: boolean;
   status!: string;
-  elem: UnFilm | UneSerie ;
-  private type : string = '';
+  elem!: UnFilm | UneSerie ;
+  type: 'film' | 'serie' = 'film'; //Typage stricte pour éviter les erreurs
 
-  constructor(private router: Router, 
+  constructor(private router: Router,
               private episodeService: EpisodeService,
-              private bddfilms: Bddfilms, 
-              private addedService: AddedService, 
+              private bddfilms: Bddfilms,
+              private addedService: AddedService,
               private watchedService: WatchedService,
-              private serieWatchedService: SerieWatchedService,
-              private seriesAddedService: SeriesAddedService,
               private onGoingService: OnGoingService,
-              private modalController: ModalController) {
-
-    const navigation = this.router.currentNavigation();
-    this.elem = navigation?.extras.state?.['elem'] ?? null;
-    this.type = navigation?.extras.state?.['type'] ?? '';
-    const id = this.elem?.id ?? null;
-    addedService.isAdded(id) ? this.listed = true : this.listed = false;
+              private modalController: ModalController,
+              private dataService: DataService
+              )
+  {
   }
 
   ionViewWillEnter() {
-    this.setupPage();
-    this.refreshStatus();
+    const data = this.dataService.getData();
+
+    if (data) {
+      this.elem = data;
+      this.type = this.isSerie(this.elem) ? 'serie' : 'film';
+      this.listed = this.addedService.isAdded(this.elem.id, this.type);
+      this.setupPage();
+      this.refreshStatus();
+    }
   }
 
    setupPage(): void {
@@ -63,16 +64,15 @@ export class Tab4Page {
 
          });
        }
-
      }
    }
 
   isSerie(elem: any): elem is UneSerie {
-    return elem && 'nbEpisodes' in elem;
+    return elem && ('nbEpisodes' in elem || 'nbSaisons' in elem);
   }
 
   isFilm(elem: any): elem is UnFilm {
-    return elem && !('nbEpisodes' in elem) && !('numero' in elem);
+    return elem && !this.isSerie(elem);
   }
 
   isEpisode(elem: any): elem is Episode {
@@ -80,13 +80,7 @@ export class Tab4Page {
   }
 
   getTitle(elem: any): string {
-    return elem?.title ?? elem?.serie.title ?? '';
-  }
-
-  getTotalDuration(serie: UneSerie): number {
-    //TODO get total duration from serie
-    //return this.bddfilms.getTotalDuration(serie);
-    return 10;
+    return elem?.title ?? '';
   }
 
   getPoster(elem: any): string {
@@ -123,56 +117,49 @@ export class Tab4Page {
   }
 
   addToList(elem: UnFilm | UneSerie) {
-    if(this.listed) {
+    if (this.listed) {
+      this.addedService.remove(elem.id, this.type);
       this.listed = false;
-      if(this.isFilm(elem)) {
-        this.addedService.remove(elem.id);
-      } else {
-        this.seriesAddedService.remove(elem.id);
-      }
     } else {
-      if(this.isFilm(elem)) {
-        this.addedService.add(elem.id);
-      } else {
-        this.seriesAddedService.add(elem.id);
-      }
+      this.addedService.add(elem.id, this.type);
       this.listed = true;
     }
   }
 
   refreshStatus(): void {
   const id = this.elem?.id ?? null;
-  if (this.isSerie(this.elem)) {
-    if (this.serieWatchedService.isAdded(id)) {
-      this.status = 'VUE';
-    } else if (this.onGoingService.isOnGoing(id)) {
-      this.status = 'EN_COURS';
+    if (!this.elem) return;
+    if (this.type === 'serie') {
+      if (this.watchedService.isWatched(this.elem.id, 'serie')) {
+        this.status = 'VUE';
+      } else if (this.onGoingService.isOnGoing(this.elem.id, 'serie')) {
+        this.status = 'EN_COURS';
+      } else {
+        this.status = 'NOT';
+      }
     } else {
-      this.status = 'NOT';
+      // C'est un film
+      this.status = this.watchedService.isWatched(this.elem.id, 'film') ? 'VUE' : 'NOT';
     }
-  } else {
-    this.watchedService.isWatched(id) ? this.status = 'VUE' : this.status = 'NOT';
   }
-}
 
-changeStatus(elem: any) {
-  if (this.status === 'NOT') {
-    if (this.isFilm(elem)) {
-      this.watchedService.add(elem.id);
+  changeStatus(elem: any) {
+    if (this.status === 'NOT') {
+      // On passe en VUE
+      this.watchedService.add(elem.id, this.type);
+      this.status = 'VUE';
+
+    } else if (this.status === 'EN_COURS') {
+      // Si c'était en cours (Série uniquement), on la retire des en cours et on la met en VUE
+      this.onGoingService.remove(elem.id, 'serie');
+      this.watchedService.add(elem.id, 'serie');
+      this.status = 'VUE';
     } else {
-      this.serieWatchedService.add(elem.id);
-    }
-  } else if (this.status === 'EN_COURS') {
-    this.onGoingService.remove(elem.id);
-    this.serieWatchedService.add(elem.id);
-  } else {
-    if (this.isFilm(elem)) {
-      this.watchedService.remove(elem.id);
-    } else {
-      this.serieWatchedService.remove(elem.id);
+      // Si c'était VUE, on décoche tout (on repasse à NOT)
+      this.watchedService.remove(elem.id, this.type);
+      this.status = 'NOT';
+
     }
   }
-  this.refreshStatus();
-}
 
 }
