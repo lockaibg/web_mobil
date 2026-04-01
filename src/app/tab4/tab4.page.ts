@@ -9,6 +9,7 @@ import { OnGoingService } from '../service/onGoing.service';
 import { ModalController } from '@ionic/angular';
 import { EpisodesModalComponent } from '../episodes-modal/episodes-modal.component';
 import { DataService } from '../service/data.service';
+import { Haptics, ImpactStyle } from '@capacitor/haptics';
 
 
 @Component({
@@ -136,23 +137,21 @@ export class Tab4Page {
     }
   }
 
-  changeStatus(elem: any) {
-    if (this.status === 'NOT') {
-      // On passe en VUE
-      this.watchedService.add(elem.id, this.type);
-      this.status = 'VUE';
+  async changeStatus(elem: any) {
+  await Haptics.impact({ style: ImpactStyle.Light });
 
-    } else if (this.status === 'EN_COURS') {
-      // Si c'était en cours (Série uniquement), on la retire des en cours et on la met en VUE
-      this.onGoingService.remove(elem.id, 'serie');
-      this.watchedService.add(elem.id, 'serie');
-      this.status = 'VUE';
-    } else {
-      // Si c'était VUE, on décoche tout (on repasse à NOT)
-      this.watchedService.remove(elem.id, this.type);
-      this.status = 'NOT';
+  if (this.status === 'NOT') {
+    this.watchedService.add(elem.id, this.type);
+    this.status = 'VUE';
 
-    }
+  } else if (this.status === 'EN_COURS') {
+    this.onGoingService.remove(elem.id, 'serie');
+    this.watchedService.add(elem.id, 'serie');
+    this.status = 'VUE';
+  } else {
+    this.watchedService.remove(elem.id, this.type);
+    this.status = 'NOT';
   }
+}
 
 }
